@@ -1,10 +1,12 @@
 package com.company;
 /**
- * Contains a class thar represents a calendar.
- * @author Viola Yasuda
- * @version 1.0 6/14/21
+ * Contains a class thar represents a calendar. Added methods related to the mvc architecture and changing the date
+ * to view.
+ * @author Haider Almandeel, Nolen Johnson, Viola Yasuda
+ * @version 1.1 7/19/21
  */
 import java.io.*;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ public class CalendarModel {
 
     /**
      * Constructs a MyCalendar object from the contents of events.txt.
+     * @author Viola Yasuda
      */
     public CalendarModel() {
         viewType = "Day";
@@ -72,6 +75,7 @@ public class CalendarModel {
     /**
      * Checks if an event conflicts with any existing events in the calendar and adds it to the calendar if not.
      * @param newEvent the event to be added
+     * @author Viola Yasuda
      */
     public void addEvent(Event newEvent) {
         for (Event e : events) {
@@ -85,9 +89,9 @@ public class CalendarModel {
         Collections.sort(events);
     }
 
-
     /**
      * Saves current events in output.txt.
+     * @author Viola Yasuda
      */
     public void saveToFile() {
         try {
@@ -116,6 +120,7 @@ public class CalendarModel {
     /**
      * Registers a CalendarView.
      * @param view the CalendarView to register
+     * @author Viola Yasuda
      */
     public void registerCalendarView(CalendarView view) {
         calendarView = view;
@@ -123,19 +128,124 @@ public class CalendarModel {
 
     /**
      * Notifies the CalendarView of any changes made to CalendarModel.
+     * @author Viola Yasuda
      */
     public void notifyCalendarView() {
         calendarView.update(eventsToView);
     }
 
+    /**
+     * Updates the string (eventsToView) that will be used to set the text area in CalendarView.
+     * @author Viola Yasuda
+     */
+    public void setEventsToView() {
+        if (viewType.equals("Day")) {
+            eventsToView = displayDayView(dateToView);
+        }
+        else if (viewType.equals("Week")) {
+            eventsToView = "";
+            LocalDate temp = dateToView;
+            while (!temp.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+                temp = temp.minusDays(1);
+            }
+            for (int i = 0; i < 7; i++) {
+                eventsToView += displayDayView(temp);
+                temp = temp.plusDays(1);
+            }
+        }
+        else if (viewType.equals("Month")) {
+            eventsToView = "";
+            LocalDate temp = LocalDate.of(dateToView.getYear(), dateToView.getMonthValue(), 1);
+            while (!temp.isEqual(LocalDate.of(dateToView.getYear(), dateToView.getMonthValue() + 1, 1))) {
+                eventsToView += displayDayView(temp);
+                temp = temp.plusDays(1);
+            }
+        }
+        else if (viewType.equals("Agenda")) {
+
+        }
+        else {
+            System.out.println("Invalid view type for showing events.");
+        }
+        notifyCalendarView();
+    }
+
+    /**
+     * Gets the string (eventsToView) that will be used to set the text area in CalendarView. We might only use this for
+     * testing/debugging (not in final product).
+     * @return a string with a list of all events to view
+     * @author Viola Yasuda
+     */
     public String getEventsToView() {
         return eventsToView;
+    }
+
+    /**
+     * Sets the view type. Should only take "Day", "Week", "Month", or "Agenda" for the parameter.
+     * @param viewType the time span type to view
+     * @author Viola Yasuda
+     */
+    public void setViewType(String viewType) {
+        this.viewType = viewType;
+    }
+
+    /**
+     * Used when clicking Today button or dates in current calendar.
+     * @param d the date to view
+     * @author Viola Yasuda
+     */
+    public void setDateToView(LocalDate d) {
+        dateToView = d;
+        setEventsToView();
+    }
+
+    /**
+     * Sets dateToView to a date either one day, week, or month after the current dateToView depending on the current
+     * viewType
+     * @author Viola Yasuda
+     */
+    public void setNextDateToView() {
+        if (viewType.equals("Day")) {
+            dateToView = dateToView.plusDays(1);
+        }
+        else if (viewType.equals("Week")) {
+            dateToView = dateToView.plusWeeks(1);
+        }
+        else if (viewType.equals("Month")) {
+            dateToView = dateToView.plusMonths(1);
+        }
+        else {
+            System.out.println("Invalid view type for moving to next date.");
+        }
+        setEventsToView();
+    }
+
+    /**
+     * Sets dateToView to a date either one day, week, or month before the current dateToView depending on the current
+     * viewType.
+     * @author Viola Yasuda
+     */
+    public void setPreviousDateToView() {
+        if (viewType.equals("Day")) {
+            dateToView = dateToView.minusDays(1);
+        }
+        else if (viewType.equals("Week")) {
+            dateToView = dateToView.minusWeeks(1);
+        }
+        else if (viewType.equals("Month")) {
+            dateToView = dateToView.minusMonths(1);
+        }
+        else {
+            System.out.println("Invalid view type for moving to next date.");
+        }
+        setEventsToView();
     }
 
     /**
      * Returns a string displaying a date along with scheduled events in order of event start time.
      * @param date the date to be displayed
      * @return a string with a date and events
+     * @author Viola Yasuda
      */
     private String displayDayView(LocalDate date) {
         ArrayList<Event> dayEvents = new ArrayList<>();
@@ -151,6 +261,7 @@ public class CalendarModel {
         for (Event e : dayEvents) {
             dateAndEvents += e.getName() + ": " + e.getTimeInterval().toString() + "\n";
         }
+        dateAndEvents += "\n";
         return dateAndEvents;
     }
 }

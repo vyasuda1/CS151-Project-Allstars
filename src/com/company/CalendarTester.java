@@ -1,8 +1,8 @@
 package com.company;
 /**
  * Contains a class with a main method that tests the CalendarModel and CalendarView classes.
- * @author
- * @version 1.0
+ * @author Viola Yasuda
+ * @version 1.0 7/19/21
  */
 
 /**
@@ -14,6 +14,8 @@ public class CalendarTester {
      * @param args any arguments passed during run time
      */
     public static void main(String [] args) {
-
+        CalendarModel model = new CalendarModel();
+        CalendarView view = new CalendarView(model);
+        view.display();
     }
 }
