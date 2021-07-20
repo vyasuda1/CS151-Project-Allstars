@@ -1,9 +1,9 @@
 package com.company;
 /**
  * Contains a class thar represents a calendar. Added methods related to the mvc architecture and changing the date
- * to view.
+ * to view. Added a method to set viewType to Agenda and code in setEventsToView for Agenda use case.
  * @author Haider Almandeel, Nolen Johnson, Viola Yasuda
- * @version 1.1 7/19/21
+ * @version 1.2 7/20/21
  */
 import java.io.*;
 import java.time.DayOfWeek;
@@ -20,8 +20,10 @@ public class CalendarModel {
     private ArrayList<Event> events; // can be one-time or recurring
     private String viewType; // can be either "Day", "Week", "Month", or "Agenda"
     private LocalDate dateToView; // default will be whatever date today is
-    private CalendarView calendarView;
+    private CalendarView calendarView; // for mvc architecture
     private String eventsToView; // will be used to set the text area in calendarView
+    private LocalDate agendaStartDate; // will be used for agenda view
+    private LocalDate agendaEndDate; // will be used for agenda view
 
     public static final DateTimeFormatter FILE_FORMATTER = DateTimeFormatter.ofPattern("M/d/yy"); //for saveToFile
     public static final DateTimeFormatter USER_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy"); //for dates from user
@@ -70,6 +72,54 @@ public class CalendarModel {
 
         //initializing contents of text area
         eventsToView = displayDayView(dateToView);
+    }
+
+    /**
+     * For From File button (may need to reformat to parse Math Class;2014;1;2;MWF;17;18;)
+     * @param filename the name of the file to load events from
+     * @author Nolen Johnson, Viola Yasuda
+     */
+    public void loadFile(String filename) {
+        File file = new File(filename);
+        try {
+            //load events from filename
+            Scanner in = new Scanner(file);
+            String name, temp, date, repeatDays, startTime, endTime, startDate, endDate;
+            while (in.hasNextLine()) {
+                name = in.nextLine();
+                temp = in.next();
+                if (temp.contains("/")) {
+                    date = temp;
+                    startTime = in.next();
+                    endTime = in.next();
+                    addEvent(new Event(name, date, startTime, endTime));
+                }
+                else {
+                    repeatDays = temp;
+                    startTime = in.next();
+                    endTime = in.next();
+                    startDate = in.next();
+                    endDate = in.next();
+                    addEvent(new Event(name, repeatDays, startTime, endTime, startDate, endDate));
+                }
+                in.nextLine();
+            }
+            Collections.sort(events);
+            System.out.println("Loading is done!");
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Loading failed.");
+        }
+    }
+
+    /**
+     * Gets the ArrayList of events. Will be used in SchedulingButtons class.
+     * @return events ArrayList
+     * @author Viola Yasuda
+     */
+    public ArrayList<Event> getEvents() {
+        return events;
     }
 
     /**
@@ -162,7 +212,12 @@ public class CalendarModel {
             }
         }
         else if (viewType.equals("Agenda")) {
-
+            eventsToView = "";
+            LocalDate temp = agendaStartDate;
+            while (!temp.isAfter(agendaEndDate)) {
+                eventsToView += displayDayView(temp);
+                temp = temp.plusDays(1);
+            }
         }
         else {
             System.out.println("Invalid view type for showing events.");
@@ -181,12 +236,26 @@ public class CalendarModel {
     }
 
     /**
-     * Sets the view type. Should only take "Day", "Week", "Month", or "Agenda" for the parameter.
+     * Sets the view type. Should only take "Day", "Week", and "Month" for the parameter.
      * @param viewType the time span type to view
      * @author Viola Yasuda
      */
     public void setViewType(String viewType) {
         this.viewType = viewType;
+        setEventsToView();
+    }
+
+    /**
+     * Sets the view type to Agenda view.
+     * @param startDate
+     * @param endDate
+     * @author Haider Almandeel
+     */
+    public void setViewType(String startDate, String endDate) {
+        viewType = "Agenda";
+        //agendaStartDate = (format startDate from String to LocalDate)
+        //agendaEndDate = (format endDate from String to LocalDate)
+        setEventsToView();
     }
 
     /**

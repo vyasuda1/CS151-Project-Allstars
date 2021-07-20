@@ -17,8 +17,8 @@ public class DateChangerButtonsTester {
      */
     public static void main(String[] args) {
         CalendarModel model = new CalendarModel();
-        //model.setViewType("Week");
-        model.setViewType("Month");
+        model.setViewType("Week");
+        //model.setViewType("Month");
         JFrame frame = new JFrame();
         DateChangerButtons dateChangerButtons = new DateChangerButtons(model);
         JPanel dateButtons = dateChangerButtons.getPanel();

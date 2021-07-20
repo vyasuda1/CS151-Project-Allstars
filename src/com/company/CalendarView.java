@@ -42,7 +42,7 @@ public class CalendarView {
     }
 
     /**
-     * Displays the Calendar's GUI.
+     * Displays the Calendar's GUI. Add ViewChangerButtons, SchedulingButtons, and CurrentCalendarComponent.
      * @author Viola Yasuda
      */
     public void display() {

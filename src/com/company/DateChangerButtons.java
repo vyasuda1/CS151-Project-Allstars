@@ -28,6 +28,10 @@ public class DateChangerButtons {
         JButton previousButton = new JButton("<");
         JButton nextButton = new JButton(">");
         todayButton.addActionListener(new ActionListener() {
+            /**
+             * Sets dateToView to today when Today button is clicked.
+             * @param e the event in which the Today button is clicked
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.setDateToView(LocalDate.now());
@@ -35,6 +39,10 @@ public class DateChangerButtons {
             }
         });
         previousButton.addActionListener(new ActionListener() {
+            /**
+             * Sets dateToView to one day/week/month before current dateToView when Previous button is clicked.
+             * @param e the event in which the Previous button is clicked
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.setPreviousDateToView();
@@ -42,6 +50,10 @@ public class DateChangerButtons {
             }
         });
         nextButton.addActionListener(new ActionListener() {
+            /**
+             * Sets dateToView to one day/week/month after current dateToView when Next button is clicked.
+             * @param e the event in which the Next button is clicked
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.setNextDateToView();
