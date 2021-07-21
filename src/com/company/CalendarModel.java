@@ -3,7 +3,7 @@ package com.company;
  * Contains a class thar represents a calendar. Added methods related to the mvc architecture and changing the date
  * to view. Added a method to set viewType to Agenda and code in setEventsToView for Agenda use case.
  * @author Haider Almandeel, Nolen Johnson, Viola Yasuda
- * @version 1.2 7/20/21
+ * @version 1.2 7/20/2021
  */
 import java.io.*;
 import java.time.DayOfWeek;

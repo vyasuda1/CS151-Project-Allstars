@@ -33,15 +33,6 @@ public class CalendarView {
     }
 
     /**
-     * Adds a panel to the CalendarView.
-     * @param panel the panel to add to the CalendarView
-     * @author Viola Yasuda
-     */
-    public void addPanel(JPanel panel) {
-        panels.add(panel);
-    }
-
-    /**
      * Displays the Calendar's GUI. Add ViewChangerButtons, SchedulingButtons, and CurrentCalendarComponent.
      * @author Viola Yasuda
      */

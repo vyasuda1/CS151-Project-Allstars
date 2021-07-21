@@ -2,7 +2,7 @@ package com.company;
 /**
  * Contains a class with a main method that tests the CalendarModel and CalendarView classes.
  * @author Viola Yasuda
- * @version 1.0 7/19/21
+ * @version 1.0 7/19/2021
  */
 
 /**
