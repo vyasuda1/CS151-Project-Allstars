@@ -247,8 +247,8 @@ public class CalendarModel {
 
    /**
      * Sets the view type to Agenda view.
-     * @param startDate -Description-
-     * @param endDate -Description-
+     * @param startDate the start date of the time span to view
+     * @param endDate the end date of the time span to view
      * @author Haider Almandeel
      */
     public void setViewType(String startDate, String endDate) {
