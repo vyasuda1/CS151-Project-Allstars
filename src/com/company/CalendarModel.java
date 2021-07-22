@@ -245,16 +245,16 @@ public class CalendarModel {
         setEventsToView();
     }
 
-    /**
+   /**
      * Sets the view type to Agenda view.
-     * @param startDate
-     * @param endDate
+     * @param startDate -Description-
+     * @param endDate -Description-
      * @author Haider Almandeel
      */
     public void setViewType(String startDate, String endDate) {
         viewType = "Agenda";
-        //agendaStartDate = (format startDate from String to LocalDate)
-        //agendaEndDate = (format endDate from String to LocalDate)
+        agendaStartDate = LocalDate.parse(startDate, USER_FORMATTER);
+        agendaEndDate = LocalDate.parse(endDate, USER_FORMATTER);
         setEventsToView();
     }
 
