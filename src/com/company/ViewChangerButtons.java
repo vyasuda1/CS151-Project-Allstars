@@ -4,10 +4,10 @@ package com.company;
  * @author Haider Almandeel, Nolen Johnson, Viola Yasuda
  * @version 1.0 7/20/2021
  */
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Scanner;
 
 /**
  * Represents the view-changing buttons in our calendar program.
@@ -38,6 +38,7 @@ public class ViewChangerButtons {
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.setViewType("Day");
+                System.out.println(model.getEventsToView());
             }
         });
         weekButton.addActionListener(new ActionListener() {
@@ -49,6 +50,7 @@ public class ViewChangerButtons {
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.setViewType("Week");
+                System.out.println(model.getEventsToView());
             }
         });
         monthButton.addActionListener(new ActionListener() {
@@ -60,6 +62,7 @@ public class ViewChangerButtons {
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.setViewType("Month");
+                System.out.println(model.getEventsToView());
             }
         });
         agendaButton.addActionListener(new ActionListener() {
@@ -70,10 +73,10 @@ public class ViewChangerButtons {
              */
             @Override
             public void actionPerformed(ActionEvent e) {
-                //JOptionPane objects to take start date and end date
-                //startDate = [user input]
-                //endDate = [user input]
-                //model.setViewType(startDate, endDate);
+                String startDate = JOptionPane.showInputDialog("Enter Start Date (MM/DD/YYYY) : ");
+                String endDate = JOptionPane.showInputDialog("Enter End Date (MM/DD/YYYY): ");
+                model.setViewType(startDate, endDate);
+                System.out.println(model.getEventsToView());
             }
         });
 
