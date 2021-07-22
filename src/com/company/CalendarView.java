@@ -24,7 +24,6 @@ public class CalendarView {
      * @author Viola Yasuda
      */
     public CalendarView(CalendarModel model) {
-        panels = new ArrayList<>();
         frame = new JFrame();
         this.model = model;
         model.registerCalendarView(this);
@@ -43,7 +42,9 @@ public class CalendarView {
         //code for the buttons
         DateChangerButtons dateChangerButtons = new DateChangerButtons(model);
         JPanel dateButtons = dateChangerButtons.getPanel();
-        panels.add(dateButtons);
+
+        ViewChangerButtons viewChangerButtons = new ViewChangerButtons(model);
+        JPanel viewButtons = viewChangerButtons.getPanel();
 
         //code for the frame
         frame.setTitle("Allstars Calendar Program");
@@ -52,9 +53,8 @@ public class CalendarView {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         frame.add(scrollPane, BorderLayout.CENTER);
-        for (JPanel p : panels) {
-            frame.add(p, BorderLayout.NORTH);
-        }
+        frame.add(dateButtons, BorderLayout.NORTH);
+        frame.add(viewButtons, BorderLayout.EAST);
     }
 
     /**
