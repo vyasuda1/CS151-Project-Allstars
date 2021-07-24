@@ -2,7 +2,7 @@ package com.company;
 /**
  * This file contains a class that represents the current calendar feature in the calendar program.
  * @author Viola Yasuda
- * @version 1.0 7/20/2021
+ * @version 1.1 7/24/2021
  */
 import javax.swing.*;
 import java.time.LocalDate;

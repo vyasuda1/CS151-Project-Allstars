@@ -13,7 +13,7 @@ import javax.swing.*;
 public class DateChangerButtonsTester {
     /**
      * To compile, comment out call to notifyCalendarView() in setEventsToView() in CalendarModel.java
-     * @param args
+     * @param args any arguments passed during run time
      */
     public static void main(String[] args) {
         CalendarModel model = new CalendarModel();

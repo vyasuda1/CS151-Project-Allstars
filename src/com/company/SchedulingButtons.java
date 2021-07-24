@@ -1,19 +1,26 @@
 package com.company;
 /**
- * Description here
+ * File description here
  * @author Nolen Johnson
- * @version 1.0 7/20/21
+ * @version 1.0 7/20/2021
  */
 import javax.swing.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Class description here
+ */
 public class SchedulingButtons {
-    private JPanel panel;
-    private CalendarModel m;
+    private final JPanel panel;
+    private final CalendarModel model;
 
-    SchedulingButtons(CalendarModel model){
-        m = model;
+    /**
+     * Constructor description here
+     * @param modelParam param description here
+     */
+    SchedulingButtons(CalendarModel modelParam){
+        model = modelParam;
         panel = new JPanel();
         AtomicInteger option = new AtomicInteger();
         AtomicBoolean doesConflict = new AtomicBoolean(false);
@@ -22,9 +29,8 @@ public class SchedulingButtons {
         panel.add(createButton);
         panel.add(fromFileButton);
 
-
         /**
-         * action listener for createButton pressed
+         * Action listener for when createButton is pressed.
          */
         createButton.addActionListener(e -> {
             Event newEvent;
@@ -34,30 +40,33 @@ public class SchedulingButtons {
                 String startT = JOptionPane.showInputDialog("Starting Time: HH") + ":00";
                 String endT = JOptionPane.showInputDialog("Ending Time: HH") + ":00";
                 newEvent = new Event(name, date, startT, endT);
-                for (Event event : m.getEvents()){
+                for (Event event : model.getEvents()){
                     if (event.conflicts(newEvent)){
                         doesConflict.set(true);
-                        option.set(JOptionPane.showConfirmDialog(null, "Would you like try to create another event", "New Event ?", JOptionPane.YES_NO_OPTION));
-
+                        option.set(JOptionPane.showConfirmDialog(null, "Would you like try to " +
+                                "create another event", "New Event ?", JOptionPane.YES_NO_OPTION));
                     }
                 }
             } while(option.get() == 1);
             if (!doesConflict.get()) {
-                m.addEvent(newEvent);
-                m.setEventsToView();
+                model.addEvent(newEvent);
+                model.setEventsToView();
             }
-
         });
 
+        /**
+         * Method description here
+         */
         fromFileButton.addActionListener(e-> {
             String filename = JOptionPane.showInputDialog("File Name: ");
-            m.loadFile(filename);
-
-                }
-                );
-
+            model.loadFile(filename);
+        });
     }
 
+    /**
+     * Method description here
+     * @return return description here
+     */
     public JPanel getPanel(){
         return panel;
     }

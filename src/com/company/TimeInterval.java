@@ -2,7 +2,7 @@ package com.company;
 /**
  * Contains a class that represents a time interval.
  * @author Viola Yasuda
- * @version 1.0 6/14/21
+ * @version 1.1 7/24/2021
  */
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -11,8 +11,8 @@ import java.time.format.DateTimeFormatter;
  * TimeInterval represents an interval of time suitable for events and has a start time and an end time.
  */
 public class TimeInterval implements Comparable {
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private final LocalTime startTime;
+    private final LocalTime endTime;
 
     public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("H:mm");
 

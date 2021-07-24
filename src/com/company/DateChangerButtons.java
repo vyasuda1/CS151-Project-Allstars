@@ -14,15 +14,15 @@ import java.time.LocalDate;
  * Represents the part of the calendar program with the date-changing buttons.
  */
 public class DateChangerButtons {
-    private CalendarModel model;
-    private JPanel panel;
+    private final CalendarModel model;
+    private final JPanel panel;
 
     /**
      * Constructs a DateChangerButtons object. Fills the panel with the buttons and assigns actionListeners to them.
-     * @param m the model to interact with
+     * @param modelParam the model to interact with
      */
-    public DateChangerButtons(CalendarModel m) {
-        model = m;
+    public DateChangerButtons(CalendarModel modelParam) {
+        model = modelParam;
         panel = new JPanel();
         JButton todayButton = new JButton("Today");
         JButton previousButton = new JButton("<");

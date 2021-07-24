@@ -2,7 +2,7 @@ package com.company;
 /**
  * Contains a class that represents an event.
  * @author Viola Yasuda
- * @version 1.0 6/14/21
+ * @version 1.1 7/24/2021
  */
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -14,10 +14,10 @@ import java.util.TreeSet;
  * the days of the week the event repeats on (if any).
  */
 public class Event implements Comparable {
-    private String name;
-    private TimeInterval timeInterval;
-    private TreeSet<LocalDate> dates;
-    private String repeatedDays;
+    private final String name;
+    private final TimeInterval timeInterval;
+    private final TreeSet<LocalDate> dates;
+    private final String repeatedDays;
 
     public static final DateTimeFormatter FILE_FORMATTER = DateTimeFormatter.ofPattern("M/d/yy"); //for dates from file
     public static final DateTimeFormatter USER_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy"); //for dates from user

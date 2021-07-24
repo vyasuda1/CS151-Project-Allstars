@@ -1,9 +1,8 @@
 package com.company;
 /**
- * Contains a class thar represents a calendar. Added methods related to the mvc architecture and changing the date
- * to view. Added a method to set viewType to Agenda and code in setEventsToView for Agenda use case.
+ * Contains a class thar represents a calendar.
  * @author Haider Almandeel, Nolen Johnson, Viola Yasuda
- * @version 1.2 7/20/2021
+ * @version 1.2 7/23/2021
  */
 import java.io.*;
 import java.time.DayOfWeek;
@@ -38,44 +37,14 @@ public class CalendarModel {
 
         // initializing events ArrayList
         events = new ArrayList<>();
-        File file = new File("events.txt");
-        try {
-            //load events from events.txt
-            Scanner in = new Scanner(file);
-            String name, temp, date, repeatDays, startTime, endTime, startDate, endDate;
-            while (in.hasNextLine()) {
-                name = in.nextLine();
-                temp = in.next();
-                if (temp.contains("/")) {
-                    date = temp;
-                    startTime = in.next();
-                    endTime = in.next();
-                    addEvent(new Event(name, date, startTime, endTime));
-                }
-                else {
-                    repeatDays = temp;
-                    startTime = in.next();
-                    endTime = in.next();
-                    startDate = in.next();
-                    endDate = in.next();
-                    addEvent(new Event(name, repeatDays, startTime, endTime, startDate, endDate));
-                }
-                in.nextLine();
-            }
-            Collections.sort(events);
-            System.out.println("Loading is done!");
-        }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-            System.out.println("Loading failed.");
-        }
+        loadFile("events.txt");
 
         //initializing contents of text area
-        eventsToView = displayDayView(dateToView);
+        eventsToView = dayViewAsString(dateToView);
     }
 
     /**
-     * For From File button (may need to reformat to parse Math Class;2014;1;2;MWF;17;18;)
+     * Loads events from a specified file.
      * @param filename the name of the file to load events from
      * @author Nolen Johnson, Viola Yasuda
      */
@@ -114,7 +83,7 @@ public class CalendarModel {
     }
 
     /**
-     * Gets the ArrayList of events. Will be used in SchedulingButtons class.
+     * Gets the ArrayList of events.
      * @return events ArrayList
      * @author Viola Yasuda
      */
@@ -189,45 +158,42 @@ public class CalendarModel {
      * @author Viola Yasuda
      */
     public void setEventsToView() {
-        if (viewType.equals("Day")) {
-            eventsToView = displayDayView(dateToView);
-        }
-        else if (viewType.equals("Week")) {
-            eventsToView = "";
-            LocalDate temp = dateToView;
-            while (!temp.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
-                temp = temp.minusDays(1);
+        switch (viewType) {
+            case "Day" -> eventsToView = dayViewAsString(dateToView);
+            case "Week" -> {
+                eventsToView = "";
+                LocalDate temp = dateToView;
+                while (!temp.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+                    temp = temp.minusDays(1);
+                }
+                for (int i = 0; i < 7; i++) {
+                    eventsToView += dayViewAsString(temp);
+                    temp = temp.plusDays(1);
+                }
             }
-            for (int i = 0; i < 7; i++) {
-                eventsToView += displayDayView(temp);
-                temp = temp.plusDays(1);
+            case "Month" -> {
+                eventsToView = "";
+                LocalDate temp = LocalDate.of(dateToView.getYear(), dateToView.getMonthValue(), 1);
+                while (!temp.isEqual(LocalDate.of(dateToView.getYear(), dateToView.getMonthValue() + 1, 1))) {
+                    eventsToView += dayViewAsString(temp);
+                    temp = temp.plusDays(1);
+                }
             }
-        }
-        else if (viewType.equals("Month")) {
-            eventsToView = "";
-            LocalDate temp = LocalDate.of(dateToView.getYear(), dateToView.getMonthValue(), 1);
-            while (!temp.isEqual(LocalDate.of(dateToView.getYear(), dateToView.getMonthValue() + 1, 1))) {
-                eventsToView += displayDayView(temp);
-                temp = temp.plusDays(1);
+            case "Agenda" -> {
+                eventsToView = "";
+                LocalDate temp = agendaStartDate;
+                while (!temp.isAfter(agendaEndDate)) {
+                    eventsToView += dayViewAsString(temp);
+                    temp = temp.plusDays(1);
+                }
             }
-        }
-        else if (viewType.equals("Agenda")) {
-            eventsToView = "";
-            LocalDate temp = agendaStartDate;
-            while (!temp.isAfter(agendaEndDate)) {
-                eventsToView += displayDayView(temp);
-                temp = temp.plusDays(1);
-            }
-        }
-        else {
-            System.out.println("Invalid view type for showing events.");
+            default -> System.out.println("Invalid view type for showing events.");
         }
         notifyCalendarView();
     }
 
     /**
-     * Gets the string (eventsToView) that will be used to set the text area in CalendarView. We might only use this for
-     * testing/debugging (not in final product).
+     * Gets the string (eventsToView) that will be used to set the text area in CalendarView.
      * @return a string with a list of all events to view
      * @author Viola Yasuda
      */
@@ -249,7 +215,7 @@ public class CalendarModel {
      * Sets the view type to Agenda view.
      * @param startDate the start date of the time span to view
      * @param endDate the end date of the time span to view
-     * @author Haider Almandeel
+     * @author Haider Almandeel, Nolen Johnson, Viola Yasuda
      */
     public void setViewType(String startDate, String endDate) {
         viewType = "Agenda";
@@ -260,11 +226,11 @@ public class CalendarModel {
 
     /**
      * Used when clicking Today button or dates in current calendar.
-     * @param d the date to view
+     * @param dateParam the date to view
      * @author Viola Yasuda
      */
-    public void setDateToView(LocalDate d) {
-        dateToView = d;
+    public void setDateToView(LocalDate dateParam) {
+        dateToView = dateParam;
         setEventsToView();
     }
 
@@ -274,17 +240,11 @@ public class CalendarModel {
      * @author Viola Yasuda
      */
     public void setNextDateToView() {
-        if (viewType.equals("Day")) {
-            dateToView = dateToView.plusDays(1);
-        }
-        else if (viewType.equals("Week")) {
-            dateToView = dateToView.plusWeeks(1);
-        }
-        else if (viewType.equals("Month")) {
-            dateToView = dateToView.plusMonths(1);
-        }
-        else {
-            System.out.println("Invalid view type for moving to next date.");
+        switch (viewType) {
+            case "Day" -> dateToView = dateToView.plusDays(1);
+            case "Week" -> dateToView = dateToView.plusWeeks(1);
+            case "Month" -> dateToView = dateToView.plusMonths(1);
+            default -> System.out.println("Invalid view type for moving to next date.");
         }
         setEventsToView();
     }
@@ -295,17 +255,11 @@ public class CalendarModel {
      * @author Viola Yasuda
      */
     public void setPreviousDateToView() {
-        if (viewType.equals("Day")) {
-            dateToView = dateToView.minusDays(1);
-        }
-        else if (viewType.equals("Week")) {
-            dateToView = dateToView.minusWeeks(1);
-        }
-        else if (viewType.equals("Month")) {
-            dateToView = dateToView.minusMonths(1);
-        }
-        else {
-            System.out.println("Invalid view type for moving to next date.");
+        switch (viewType) {
+            case "Day" -> dateToView = dateToView.minusDays(1);
+            case "Week" -> dateToView = dateToView.minusWeeks(1);
+            case "Month" -> dateToView = dateToView.minusMonths(1);
+            default -> System.out.println("Invalid view type for moving to next date.");
         }
         setEventsToView();
     }
@@ -316,7 +270,7 @@ public class CalendarModel {
      * @return a string with a date and events
      * @author Viola Yasuda
      */
-    private String displayDayView(LocalDate date) {
+    private String dayViewAsString(LocalDate date) {
         ArrayList<Event> dayEvents = new ArrayList<>();
         String dateAndEvents = date.getDayOfWeek() + ", " + date.getMonth() + " " + date.getDayOfMonth() + ", " +
                 date.getYear() + "\n";

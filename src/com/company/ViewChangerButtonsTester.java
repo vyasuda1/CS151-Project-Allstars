@@ -8,11 +8,11 @@ package com.company;
 import javax.swing.*;
 
 /**
- * To compile, comment out call to notifyCalendarView() in setEventsToView() in CalendarModel.java
+ * -Description of class-
  */
 public class ViewChangerButtonsTester {
     /**
-     * -Desciprtion of method-
+     * To compile, comment out call to notifyCalendarView() in setEventsToView() in CalendarModel.java
      * @param args -Description of args-
      */
     public static void main(String[] args) {

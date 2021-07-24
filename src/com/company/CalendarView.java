@@ -1,25 +1,23 @@
 package com.company;
 /**
  * This file contains a class that represents the GUI of a calendar program.
- * @author Haider Almandeel, Nolen Johnson, Viola Yasuda
- * @version 1.0 7/17/2021
+ * @author Viola Yasuda
+ * @version 1.1 7/23/2021
  */
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 /**
  * Represents the GUI part of a calendar program.
  */
 public class CalendarView {
-    private CalendarModel model;
-    private JTextArea textArea;
+    private final CalendarModel model;
+    private final JTextArea textArea;
 
     /**
      * Constructs a CalendarView object.
      * @param model the model for the CalendarView to represent
-     * @author Viola Yasuda
      */
     public CalendarView(CalendarModel model) {
         this.model = model;
@@ -29,8 +27,7 @@ public class CalendarView {
     }
 
     /**
-     * Displays the Calendar's GUI. Add ViewChangerButtons, SchedulingButtons, and CurrentCalendarComponent.
-     * @author Viola Yasuda
+     * Displays the Calendar's GUI. Add CurrentCalendarComponent.
      */
     public void display() {
         //code for the text area
@@ -60,7 +57,6 @@ public class CalendarView {
     /**
      * Updates the CalendarView to show the correct list of events given the view type and date to view.
      * @param events the list of events to display in the text area
-     * @author Viola Yasuda
      */
     public void update(String events) {
         textArea.setText(events);

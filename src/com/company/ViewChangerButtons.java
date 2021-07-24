@@ -7,22 +7,21 @@ package com.company;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Scanner;
 
 /**
  * Represents the view-changing buttons in our calendar program.
  */
 public class ViewChangerButtons {
-    private JPanel panel;
-    private CalendarModel model;
+    private final JPanel panel;
+    private final CalendarModel model;
 
     /**
      * Constructs a ViewChangerButtons object.
-     * @param m the model to interact with
+     * @param modelParam the model to interact with
      * @author Haider Almandeel, Nolen Johnson, Viola Yasuda
      */
-    public ViewChangerButtons(CalendarModel m) {
-        model = m;
+    public ViewChangerButtons(CalendarModel modelParam) {
+        model = modelParam;
         panel = new JPanel();
         JButton dayButton = new JButton("Day");
         JButton weekButton = new JButton("Week");
@@ -69,7 +68,7 @@ public class ViewChangerButtons {
             /**
              * Changes the view type to Agenda view when the Agenda button is clicked.
              * @param e the event in which the Agenda button is clicked
-             * @author Haider Almandeel
+             * @author Haider Almandeel, Nolen Johnson, Viola Yasuda
              */
             @Override
             public void actionPerformed(ActionEvent e) {
