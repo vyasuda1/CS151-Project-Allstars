@@ -27,12 +27,13 @@ public class SchedulingButtons {
          * action listener for createButton pressed
          */
         createButton.addActionListener(e -> {
+            Event newEvent;
             do {
                 String name = JOptionPane.showInputDialog("Name: ");
                 String date = JOptionPane.showInputDialog("Date: MM/DD/YYYY");
                 String startT = JOptionPane.showInputDialog("Starting Time: HH") + ":00";
                 String endT = JOptionPane.showInputDialog("Ending Time: HH") + ":00";
-                Event newEvent = new Event(name, date, startT, endT);
+                newEvent = new Event(name, date, startT, endT);
                 for (Event event : m.getEvents()){
                     if (event.conflicts(newEvent)){
                         doesConflict.set(true);
@@ -43,6 +44,7 @@ public class SchedulingButtons {
             } while(option.get() == 1);
             if (!doesConflict.get()) {
                 m.addEvent(newEvent);
+                m.setEventsToView();
             }
 
         });

@@ -13,8 +13,6 @@ import java.util.ArrayList;
  * Represents the GUI part of a calendar program.
  */
 public class CalendarView {
-    private ArrayList<JPanel> panels;
-    private JFrame frame;
     private CalendarModel model;
     private JTextArea textArea;
 
@@ -24,7 +22,6 @@ public class CalendarView {
      * @author Viola Yasuda
      */
     public CalendarView(CalendarModel model) {
-        frame = new JFrame();
         this.model = model;
         model.registerCalendarView(this);
         textArea = new JTextArea(model.getEventsToView());
@@ -42,11 +39,13 @@ public class CalendarView {
         //code for the buttons
         DateChangerButtons dateChangerButtons = new DateChangerButtons(model);
         JPanel dateButtons = dateChangerButtons.getPanel();
-
         ViewChangerButtons viewChangerButtons = new ViewChangerButtons(model);
         JPanel viewButtons = viewChangerButtons.getPanel();
+        SchedulingButtons schedulingButtons = new SchedulingButtons(model);
+        JPanel scheduleButtons = schedulingButtons.getPanel();
 
         //code for the frame
+        JFrame frame = new JFrame();
         frame.setTitle("Allstars Calendar Program");
         frame.setSize(400, 400);
         frame.setResizable(true);
@@ -54,7 +53,8 @@ public class CalendarView {
         frame.setVisible(true);
         frame.add(scrollPane, BorderLayout.CENTER);
         frame.add(dateButtons, BorderLayout.NORTH);
-        frame.add(viewButtons, BorderLayout.EAST);
+        frame.add(viewButtons, BorderLayout.SOUTH);
+        frame.add(scheduleButtons, BorderLayout.EAST);
     }
 
     /**
