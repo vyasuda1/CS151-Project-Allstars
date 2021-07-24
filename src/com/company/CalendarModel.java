@@ -92,6 +92,15 @@ public class CalendarModel {
     }
 
     /**
+     * Gets the date to view.
+     * @return the date to view
+     * @author Viola Yasuda
+     */
+    public LocalDate getDateToView() {
+        return dateToView;
+    }
+
+    /**
      * Checks if an event conflicts with any existing events in the calendar and adds it to the calendar if not.
      * @param newEvent the event to be added
      * @author Viola Yasuda

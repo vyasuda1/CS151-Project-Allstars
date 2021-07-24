@@ -40,11 +40,13 @@ public class CalendarView {
         JPanel viewButtons = viewChangerButtons.getPanel();
         SchedulingButtons schedulingButtons = new SchedulingButtons(model);
         JPanel scheduleButtons = schedulingButtons.getPanel();
+        CurrentCalendarComponent currentCalendarComponent = new CurrentCalendarComponent(model);
+        JPanel currentCalendar = currentCalendarComponent.getPanel();
 
         //code for the frame
         JFrame frame = new JFrame();
         frame.setTitle("Allstars Calendar Program");
-        frame.setSize(400, 400);
+        frame.setSize(900, 600);
         frame.setResizable(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -52,6 +54,7 @@ public class CalendarView {
         frame.add(dateButtons, BorderLayout.NORTH);
         frame.add(viewButtons, BorderLayout.SOUTH);
         frame.add(scheduleButtons, BorderLayout.EAST);
+        frame.add(currentCalendar, BorderLayout.WEST);
     }
 
     /**
