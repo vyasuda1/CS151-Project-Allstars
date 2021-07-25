@@ -24,8 +24,9 @@ public class SchedulingButtons {
         panel = new JPanel();
         AtomicInteger option = new AtomicInteger();
         AtomicBoolean doesConflict = new AtomicBoolean(false);
-        JButton createButton = new JButton("Create");
+        JButton createButton = new JButton(" Create  ");
         JButton fromFileButton = new JButton("fromFile");
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(createButton);
         panel.add(fromFileButton);
 
