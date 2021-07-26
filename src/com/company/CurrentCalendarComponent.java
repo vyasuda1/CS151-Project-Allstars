@@ -6,6 +6,8 @@ package com.company;
  */
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
@@ -105,12 +107,35 @@ public class CurrentCalendarComponent {
             date = dateParam;
             calendarModel = modelParam;
             setText(Integer.toString(date.getDayOfMonth()));
+            setFocusPainted(false);
             if (date.getMonthValue() == selectedDate.getMonthValue()) {
-                addActionListener(e -> calendarModel.setDateToView(date));
+                addActionListener(e -> {
+                    calendarModel.setDateToView(date);
+                    selectedDate = date;
+                });
             }
             else {
                 setEnabled(false);
             }
+            addFocusListener(new FocusListener() {
+                /**
+                 * Highlights button yellow if focus is gained.
+                 * @param e the event in which focus on button is gained
+                 */
+                @Override
+                public void focusGained(FocusEvent e) {
+                    setBackground(Color.YELLOW);
+                }
+
+                /**
+                 * Sets button's background to default color if focus is lost.
+                 * @param e the event in which focus on button is lost
+                 */
+                @Override
+                public void focusLost(FocusEvent e) {
+                    setBackground(null);
+                }
+            });
         }
     }
 
