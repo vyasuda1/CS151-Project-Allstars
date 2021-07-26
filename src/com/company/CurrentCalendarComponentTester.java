@@ -5,6 +5,8 @@ package com.company;
  * @verison 1.0 7/24/2021
  */
 
+import javax.swing.*;
+
 /**
  * Makes a frame and text area. Tests the current calendar component.
  */
@@ -14,6 +16,15 @@ public class CurrentCalendarComponentTester {
      * @param args any arguments passed during run time
      */
     public static void main(String[] args) {
-
+        CalendarModel model = new CalendarModel();
+        JFrame frame = new JFrame();
+        CurrentCalendarComponent currentCalendarComponent = new CurrentCalendarComponent(model);
+        JPanel currentCalendar = currentCalendarComponent.getPanel();
+        frame.add(currentCalendar);
+        frame.setTitle("DateChangerButtonsTester.java");
+        frame.setSize(290, 200);
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
     }
 }
