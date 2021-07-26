@@ -48,13 +48,33 @@ public class ViewChangerButtons {
             agendaButton.setBackground(null);
         });
         agendaButton.addActionListener(e -> {
-            String startDate = JOptionPane.showInputDialog("Enter Start Date (MM/DD/YYYY) : ");
-            String endDate = JOptionPane.showInputDialog("Enter End Date (MM/DD/YYYY): ");
-            model.setViewType(startDate, endDate);
-            dayButton.setBackground(null);
-            weekButton.setBackground(null);
-            monthButton.setBackground(null);
-            agendaButton.setBackground(Color.YELLOW);
+            JTextField startDateField = new JTextField(10);
+            JTextField endDateField = new JTextField(10);
+
+            JPanel myPanel = new JPanel();
+            myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
+            myPanel.add(new JLabel("Please Enter Start and End Dates."));
+            myPanel.add(Box.createVerticalStrut(20));
+            myPanel.add(new JLabel("Start Date (MM/DD/YYYY):"));
+            myPanel.add(startDateField);
+            myPanel.add(Box.createVerticalStrut(10));
+            myPanel.add(new JLabel("End Date (MM/DD/YYYY):"));
+            myPanel.add(endDateField);
+
+            int result = JOptionPane.showConfirmDialog(null, myPanel,
+                    "Agenda Start/End Dates.", JOptionPane.CLOSED_OPTION);
+            String startDate, endDate;
+            if (result == JOptionPane.OK_OPTION) {
+                startDate = startDateField.getText();
+                endDate = endDateField.getText();
+                if (startDate.length() == 10 && endDate.length() == 10) {
+                    model.setViewType(startDate, endDate);
+                    dayButton.setBackground(null);
+                    weekButton.setBackground(null);
+                    monthButton.setBackground(null);
+                    agendaButton.setBackground(Color.YELLOW);
+                }
+            }
         });
 
         panel.add(dayButton);

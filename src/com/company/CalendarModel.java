@@ -183,7 +183,7 @@ public class CalendarModel {
             case "Month" -> {
                 eventsToView = "";
                 LocalDate temp = LocalDate.of(dateToView.getYear(), dateToView.getMonthValue(), 1);
-                while (!temp.isEqual(LocalDate.of(dateToView.getYear(), dateToView.getMonthValue() + 1, 1))) {
+                while (temp.isBefore(LocalDate.of(dateToView.getYear(), dateToView.getMonthValue() + 1, 1))) {
                     eventsToView += dayViewAsString(temp);
                     temp = temp.plusDays(1);
                 }

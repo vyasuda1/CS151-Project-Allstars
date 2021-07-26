@@ -119,6 +119,7 @@ public class Event implements Comparable {
      * Puts information about the event into a string.
      * @return a string with the event's information
      */
+    /*
     @Override
     public String toString() {
         //return eventAsStr;
@@ -130,6 +131,7 @@ public class Event implements Comparable {
                     dates.last().format(FILE_FORMATTER);
         return str;
     }
+     */
 
     /**
      * Compares this event to another event
