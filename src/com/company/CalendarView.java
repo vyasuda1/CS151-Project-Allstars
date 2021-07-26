@@ -27,7 +27,7 @@ public class CalendarView {
     }
 
     /**
-     * Displays the Calendar's GUI. Add CurrentCalendarComponent.
+     * Displays the Calendar's GUI.
      */
     public void display() {
         //code for the text area

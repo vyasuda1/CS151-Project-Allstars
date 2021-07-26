@@ -1,12 +1,10 @@
 package com.company;
 /**
  * This file contains a class that represents the view-changing buttons in our calendar program.
- * @author Haider Almandeel, Nolen Johnson, Viola Yasuda
+ * @author Haider Almandeel
  * @version 1.0 7/20/2021
  */
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Represents the view-changing buttons in our calendar program.
@@ -18,7 +16,6 @@ public class ViewChangerButtons {
     /**
      * Constructs a ViewChangerButtons object.
      * @param modelParam the model to interact with
-     * @author Haider Almandeel, Nolen Johnson, Viola Yasuda
      */
     public ViewChangerButtons(CalendarModel modelParam) {
         model = modelParam;
@@ -28,55 +25,13 @@ public class ViewChangerButtons {
         JButton monthButton = new JButton("Month");
         JButton agendaButton = new JButton("Agenda");
 
-        dayButton.addActionListener(new ActionListener() {
-            /**
-             * Changes the view type to Day view when the Day button is clicked.
-             * @param e the event in which the Day button is clicked
-             * @author Haider Almandeel, Nolen Johnson, Viola Yasuda
-             */
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                model.setViewType("Day");
-                System.out.println(model.getEventsToView());
-            }
-        });
-        weekButton.addActionListener(new ActionListener() {
-            /**
-             * Changes the view type to Week view when the Week button is clicked.
-             * @param e the event in which the Week button is clicked
-             * @author Haider Almandeel, Nolen Johnson, Viola Yasuda
-             */
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                model.setViewType("Week");
-                System.out.println(model.getEventsToView());
-            }
-        });
-        monthButton.addActionListener(new ActionListener() {
-            /**
-             * Changes the view type to Month view when the Month button is clicked.
-             * @param e the event in which the Month button is clicked
-             * @author Haider Almandeel, Nolen Johnson, Viola Yasuda
-             */
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                model.setViewType("Month");
-                System.out.println(model.getEventsToView());
-            }
-        });
-        agendaButton.addActionListener(new ActionListener() {
-            /**
-             * Changes the view type to Agenda view when the Agenda button is clicked.
-             * @param e the event in which the Agenda button is clicked
-             * @author Haider Almandeel, Nolen Johnson, Viola Yasuda
-             */
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String startDate = JOptionPane.showInputDialog("Enter Start Date (MM/DD/YYYY) : ");
-                String endDate = JOptionPane.showInputDialog("Enter End Date (MM/DD/YYYY): ");
-                model.setViewType(startDate, endDate);
-                System.out.println(model.getEventsToView());
-            }
+        dayButton.addActionListener(e -> model.setViewType("Day"));
+        weekButton.addActionListener(e -> model.setViewType("Week"));
+        monthButton.addActionListener(e -> model.setViewType("Month"));
+        agendaButton.addActionListener(e -> {
+            String startDate = JOptionPane.showInputDialog("Enter Start Date (MM/DD/YYYY) : ");
+            String endDate = JOptionPane.showInputDialog("Enter End Date (MM/DD/YYYY): ");
+            model.setViewType(startDate, endDate);
         });
 
         panel.add(dayButton);
@@ -88,7 +43,6 @@ public class ViewChangerButtons {
     /**
      * Gets the panel that will be used in CalendarView.
      * @return panel
-     * @author Haider Almandeel, Nolen Johnson, Viola Yasuda
      */
     public JPanel getPanel() {
         return panel;

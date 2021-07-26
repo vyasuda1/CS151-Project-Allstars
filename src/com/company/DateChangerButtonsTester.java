@@ -1,6 +1,6 @@
 package com.company;
 /**
- * This file contains a tester class that tests the DateChangerButtons class. Take out before final submission.
+ * This file contains a tester class that tests the DateChangerButtons class.
  * @author Viola Yasuda
  * @version 1.0 7/19/21
  */
@@ -8,11 +8,12 @@ package com.company;
 import javax.swing.*;
 
 /**
- * Makes a frame and text area. Tests the date changing buttons.
+ * Makes a frame and DateChangerButtons object. Tests the date changing buttons.
  */
 public class DateChangerButtonsTester {
     /**
-     * To compile, comment out call to notifyCalendarView() in setEventsToView() in CalendarModel.java
+     * To compile, comment out call to notifyCalendarView() in setEventsToView() in CalendarModel.java and uncomment
+     * the print statement in CalendarModel.java.
      * @param args any arguments passed during run time
      */
     public static void main(String[] args) {

@@ -6,8 +6,6 @@ package com.company;
  */
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalDate;
 
 /**
@@ -27,39 +25,9 @@ public class DateChangerButtons {
         JButton todayButton = new JButton("Today");
         JButton previousButton = new JButton("<");
         JButton nextButton = new JButton(">");
-        todayButton.addActionListener(new ActionListener() {
-            /**
-             * Sets dateToView to today when Today button is clicked.
-             * @param e the event in which the Today button is clicked
-             */
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                model.setDateToView(LocalDate.now());
-                System.out.println(model.getEventsToView()); //remove before final submission
-            }
-        });
-        previousButton.addActionListener(new ActionListener() {
-            /**
-             * Sets dateToView to one day/week/month before current dateToView when Previous button is clicked.
-             * @param e the event in which the Previous button is clicked
-             */
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                model.setPreviousDateToView();
-                System.out.println(model.getEventsToView()); //remove before final submission
-            }
-        });
-        nextButton.addActionListener(new ActionListener() {
-            /**
-             * Sets dateToView to one day/week/month after current dateToView when Next button is clicked.
-             * @param e the event in which the Next button is clicked
-             */
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                model.setNextDateToView();
-                System.out.println(model.getEventsToView()); //remove before final submission
-            }
-        });
+        todayButton.addActionListener(e -> model.setDateToView(LocalDate.now()));
+        previousButton.addActionListener(e -> model.setPreviousDateToView());
+        nextButton.addActionListener(e -> model.setNextDateToView());
         panel.add(todayButton);
         panel.add(previousButton);
         panel.add(nextButton);

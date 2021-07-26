@@ -29,10 +29,6 @@ public class SchedulingButtons {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(createButton);
         panel.add(fromFileButton);
-
-        /**
-         * Action listener for when createButton is pressed.
-         */
         createButton.addActionListener(e -> {
             Event newEvent;
             do {
@@ -54,10 +50,6 @@ public class SchedulingButtons {
                 model.setEventsToView();
             }
         });
-
-        /**
-         * Method description here
-         */
         fromFileButton.addActionListener(e-> {
             String filename = JOptionPane.showInputDialog("File Name: ");
             model.loadFile(filename);

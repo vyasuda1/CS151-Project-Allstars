@@ -73,7 +73,7 @@ public class TimeInterval implements Comparable {
      * Compares this time interval to another.
      * @param o the time interval being compared to
      * @return a negative number if this time interval is earlier, a positive number if this time interval is later,
-     * or 0 if this time inverval occurs at the same time as the other
+     * or 0 if this time interval occurs at the same time as the other
      */
     @Override
     public int compareTo(Object o) {

@@ -16,7 +16,7 @@ import java.util.Scanner;
  * CalendarModel represents a calendar and defines an underlying data structure to hold events.
  */
 public class CalendarModel {
-    private ArrayList<Event> events; // can be one-time or recurring
+    private final ArrayList<Event> events; // can be one-time or recurring
     private String viewType; // can be either "Day", "Week", "Month", or "Agenda"
     private LocalDate dateToView; // default will be whatever date today is
     private CalendarView calendarView; // for mvc architecture
@@ -199,6 +199,7 @@ public class CalendarModel {
             default -> System.out.println("Invalid view type for showing events.");
         }
         notifyCalendarView();
+        //System.out.println(calendarModel.getEventsToView()); //only for Tester classes
     }
 
     /**
@@ -245,7 +246,7 @@ public class CalendarModel {
 
     /**
      * Sets dateToView to a date either one day, week, or month after the current dateToView depending on the current
-     * viewType
+     * viewType.
      * @author Viola Yasuda
      */
     public void setNextDateToView() {

@@ -6,8 +6,6 @@ package com.company;
  */
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
@@ -15,24 +13,27 @@ import java.time.LocalDate;
  * This class represents the current calendar in our calendar program.
  */
 public class CurrentCalendarComponent {
-    private JPanel panel;
-    private CalendarModel model;
+    private LocalDate selectedDate;
+    private final JPanel panel;
+    private final CalendarModel model;
     public static final String[] DAYS_OF_WEEK = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+    public static final int CALENDAR_ROWS = 7;
+    public static final int CALENDAR_COLUMNS = 6;
 
     /**
      * Constructs a CurrentCalendarComponent object.
      * @param modelParam the model to interact with
      */
     public CurrentCalendarComponent(CalendarModel modelParam) {
+        //initializing instance variables
         model = modelParam;
+        selectedDate = model.getDateToView();
         panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        JPanel headerPanel = new JPanel();
-        JPanel calendarPanel = new JPanel();
 
         //initialize headerPanel
+        JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.X_AXIS));
-        JLabel monthYearLabel = new JLabel(model.getDateToView().getMonth() + " " + model.getDateToView().getYear() + " ");
+        JLabel monthYearLabel = new JLabel(selectedDate.getMonth() + " " + selectedDate.getYear() + " ");
         JButton backButton = new JButton("<");
         JButton nextButton = new JButton(">");
         headerPanel.add(monthYearLabel);
@@ -40,22 +41,44 @@ public class CurrentCalendarComponent {
         headerPanel.add(nextButton);
 
         //initialize calendarPanel
-        calendarPanel.setLayout(new GridLayout(7, 7));
-        for (int i = 0; i < DAYS_OF_WEEK.length; i++) {
-            calendarPanel.add(new JLabel(DAYS_OF_WEEK[i], JLabel.CENTER));
+        JPanel calendarPanel = new JPanel();
+        calendarPanel.setLayout(new GridLayout(CALENDAR_ROWS, CALENDAR_COLUMNS + DAYS_OF_WEEK.length));
+        updateCalendarPanel(calendarPanel);
+        backButton.addActionListener(e -> {
+            selectedDate = selectedDate.minusMonths(1);
+            monthYearLabel.setText(selectedDate.getMonth() + " " + selectedDate.getYear() + " ");
+            updateCalendarPanel(calendarPanel);
+        });
+        nextButton.addActionListener(e -> {
+            selectedDate = selectedDate.plusMonths(1);
+            monthYearLabel.setText(selectedDate.getMonth() + " " + selectedDate.getYear() + " ");
+            updateCalendarPanel(calendarPanel);
+        });
+
+        //adding header and calendar panels to main panel
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(headerPanel);
+        panel.add(calendarPanel);
+    }
+
+    /**
+     * Updates a panel to show the correct month display.
+     * @param calendarPanel the panel to update
+     */
+    private void updateCalendarPanel(JPanel calendarPanel) {
+        calendarPanel.removeAll();
+        for (String s : DAYS_OF_WEEK) {
+            calendarPanel.add(new JLabel(s, JLabel.CENTER));
         }
-        LocalDate temp = LocalDate.of(model.getDateToView().getYear(), model.getDateToView().getMonthValue(), 1);
+        LocalDate temp = LocalDate.of(selectedDate.getYear(), selectedDate.getMonthValue(), 1);
         while (!temp.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
             temp = temp.minusDays(1);
         }
-        for (int i = 0; i < 42; i++) {
+        for (int i = 0; i < CALENDAR_ROWS * CALENDAR_COLUMNS; i++) {
             CalendarNumberButton button = new CalendarNumberButton(temp, model);
             calendarPanel.add(button);
             temp = temp.plusDays(1);
         }
-
-        panel.add(headerPanel);
-        panel.add(calendarPanel);
     }
 
     /**
@@ -66,31 +89,28 @@ public class CurrentCalendarComponent {
         return panel;
     }
 
+    /**
+     * Represents a button corresponding to a day in a month.
+     */
     public class CalendarNumberButton extends JButton {
-        private LocalDate date;
-        private CalendarModel calendarModel;
+        private final LocalDate date;
+        private final CalendarModel calendarModel;
+
+        /**
+         * Constructs a CalendarNumberButton object.
+         * @param dateParam the date corresponding to this CalendarNumberButton
+         * @param modelParam the model to update whenever the button is pressed
+         */
         public CalendarNumberButton(LocalDate dateParam, CalendarModel modelParam) {
             date = dateParam;
             calendarModel = modelParam;
             setText(Integer.toString(date.getDayOfMonth()));
-            if (date.getMonthValue() == calendarModel.getDateToView().getMonthValue()) {
-                addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        calendarModel.setDateToView(date);
-                    }
-                });
+            if (date.getMonthValue() == selectedDate.getMonthValue()) {
+                addActionListener(e -> calendarModel.setDateToView(date));
             }
             else {
                 setEnabled(false);
             }
-        }
-        public LocalDate getDate() {
-            return date;
-        }
-        public void setDate(LocalDate date) {
-            this.date = date;
-            setText(Integer.toString(date.getDayOfMonth()));
         }
     }
 

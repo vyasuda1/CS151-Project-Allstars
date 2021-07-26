@@ -12,7 +12,8 @@ import javax.swing.*;
  */
 public class ViewChangerButtonsTester {
     /**
-     * To compile, comment out call to notifyCalendarView() in setEventsToView() in CalendarModel.java
+     * To compile, comment out call to notifyCalendarView() in setEventsToView() in CalendarModel.java and uncomment
+     * the print statement in CalendarModel.java.
      * @param args -Description of args-
      */
     public static void main(String[] args) {
