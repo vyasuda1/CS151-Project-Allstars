@@ -50,17 +50,17 @@ public class ViewChangerButtons {
         agendaButton.addActionListener(e -> {
             JTextField startDateField = new JTextField(10);
             JTextField endDateField = new JTextField(10);
-            JPanel myPanel = new JPanel();
-            myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
-            myPanel.add(new JLabel("Please Enter Start and End Dates."));
-            myPanel.add(Box.createVerticalStrut(20));
-            myPanel.add(new JLabel("Start Date (MM/DD/YYYY):"));
-            myPanel.add(startDateField);
-            myPanel.add(Box.createVerticalStrut(10));
-            myPanel.add(new JLabel("End Date (MM/DD/YYYY):"));
-            myPanel.add(endDateField);
-            int result = JOptionPane.showConfirmDialog(null, myPanel,
-                    "Agenda Start/End Dates.", JOptionPane.CLOSED_OPTION);
+            JPanel popupPanel = new JPanel();
+            popupPanel.setLayout(new BoxLayout(popupPanel, BoxLayout.Y_AXIS));
+            popupPanel.add(new JLabel("Please enter start and end dates for the agenda."));
+            popupPanel.add(Box.createVerticalStrut(20));
+            popupPanel.add(new JLabel("Start Date (format it MM/DD/YYYY):"));
+            popupPanel.add(startDateField);
+            popupPanel.add(Box.createVerticalStrut(10));
+            popupPanel.add(new JLabel("End Date (format it MM/DD/YYYY):"));
+            popupPanel.add(endDateField);
+            int result = JOptionPane.showConfirmDialog(null, popupPanel,
+                    "Agenda Start/End Dates", JOptionPane.CLOSED_OPTION);
             String startDate, endDate;
             if (result == JOptionPane.OK_OPTION) {
                 startDate = startDateField.getText();

@@ -5,6 +5,7 @@ package com.company;
  * @version 1.0 7/20/2021
  */
 import javax.swing.*;
+import java.awt.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -51,8 +52,22 @@ public class SchedulingButtons {
             }
         });
         fromFileButton.addActionListener(e-> {
-            String filename = JOptionPane.showInputDialog("File Name: ");
-            model.loadFile(filename);
+            JTextField fileNameField = new JTextField(10);
+            JPanel popupPanel = new JPanel();
+            popupPanel.setLayout(new BoxLayout(popupPanel, BoxLayout.Y_AXIS));
+            popupPanel.add(new JLabel("Please enter the name of the file to load recurring events from."));
+            popupPanel.add(Box.createVerticalStrut(20));
+            popupPanel.add(new JLabel("File Name (format it filename.txt):"));
+            popupPanel.add(fileNameField);
+            int result = JOptionPane.showConfirmDialog(null, popupPanel,
+                    "Loading Events From File", JOptionPane.CLOSED_OPTION);
+            String filename;
+            if (result == JOptionPane.OK_OPTION) {
+                filename = fileNameField.getText();
+                if (filename.contains(".txt")) {
+                    model.loadFile(filename);
+                }
+            }
         });
     }
 
