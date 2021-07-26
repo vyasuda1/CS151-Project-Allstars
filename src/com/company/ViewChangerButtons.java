@@ -50,7 +50,6 @@ public class ViewChangerButtons {
         agendaButton.addActionListener(e -> {
             JTextField startDateField = new JTextField(10);
             JTextField endDateField = new JTextField(10);
-
             JPanel myPanel = new JPanel();
             myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
             myPanel.add(new JLabel("Please Enter Start and End Dates."));
@@ -60,7 +59,6 @@ public class ViewChangerButtons {
             myPanel.add(Box.createVerticalStrut(10));
             myPanel.add(new JLabel("End Date (MM/DD/YYYY):"));
             myPanel.add(endDateField);
-
             int result = JOptionPane.showConfirmDialog(null, myPanel,
                     "Agenda Start/End Dates.", JOptionPane.CLOSED_OPTION);
             String startDate, endDate;
