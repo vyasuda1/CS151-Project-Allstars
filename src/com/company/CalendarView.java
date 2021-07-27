@@ -98,7 +98,7 @@ public class CalendarView {
         gridBagConstraints.gridheight = 1;
         gridBagConstraints.weightx = COLUMN_WEIGHT;
         gridBagConstraints.weighty = ROW_3_WEIGHT;
-        gridBagConstraints.insets = new Insets(0, 25, 25, 25);
+        gridBagConstraints.insets = new Insets(25, 25, 25, 25);
         frame.add(currentCalendar, gridBagConstraints);
 
         gridBagConstraints.gridx = 1;
