@@ -81,14 +81,14 @@ public class CalendarView {
         gridBagConstraints.fill = GridBagConstraints.BOTH;
         gridBagConstraints.insets = new Insets(0, 25, 0, 25);
         frame.add(scrollPane, gridBagConstraints);
-
+        //layout constraints for current calendar
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridheight = 1;
         gridBagConstraints.weighty = LARGE_ROW_WEIGHT;
         gridBagConstraints.insets = new Insets(25, 25, 25, 25);
         frame.add(currentCalendar, gridBagConstraints);
-
+        //layout constraints for formatter buttons
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.weighty = SMALL_ROW_WEIGHT;
