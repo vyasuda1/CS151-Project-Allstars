@@ -45,15 +45,16 @@ public class CalendarView {
 
         //code for the frame
         JFrame frame = new JFrame();
+        //frame.setLayout(new FlowLayout());
         frame.setTitle("Allstars Calendar Program");
-        frame.setSize(900, 600);
-        frame.setResizable(true);
+        frame.setSize(800, 500);
+        frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        frame.add(scrollPane, BorderLayout.CENTER);
         frame.add(dateButtons, BorderLayout.NORTH);
         frame.add(viewButtons, BorderLayout.SOUTH);
         frame.add(scheduleButtons, BorderLayout.EAST);
+        frame.add(scrollPane, BorderLayout.CENTER);
         frame.add(currentCalendar, BorderLayout.WEST);
     }
 
