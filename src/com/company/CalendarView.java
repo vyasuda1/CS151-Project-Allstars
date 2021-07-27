@@ -14,10 +14,8 @@ import java.awt.*;
 public class CalendarView {
     private final CalendarModel model;
     private final JTextArea textArea;
-    public static final double ROW_1_WEIGHT = 0.1;
-    public static final double ROW_2_WEIGHT = 0.1;
-    public static final double ROW_3_WEIGHT = 0.8;
-    public static final double ROW_4_WEIGHT = 0.1;
+    public static final double SMALL_ROW_WEIGHT = 0.1;
+    public static final double LARGE_ROW_WEIGHT = 0.7;
     public static final double COLUMN_WEIGHT = 0.5;
 
     /**
@@ -49,10 +47,10 @@ public class CalendarView {
         JPanel currentCalendar = currentCalendarComponent.getPanel();
 
         JButton dateFirstFormatterButton = new JButton("Date First");
-        JButton timeFirstFormetterButton = new JButton("Time FIrst");
+        JButton timeFirstFormatterButton = new JButton("Time First");
         JPanel formatterPanel = new JPanel();
         formatterPanel.add(dateFirstFormatterButton);
-        formatterPanel.add(timeFirstFormetterButton);
+        formatterPanel.add(timeFirstFormatterButton);
 
         //code for the frame
         JFrame frame = new JFrame();
@@ -61,34 +59,25 @@ public class CalendarView {
         frame.setResizable(false);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         frame.setLayout(new GridBagLayout());
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
-
+        //layout constraints for dateButtons
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.weightx = COLUMN_WEIGHT;
-        gridBagConstraints.weighty = ROW_1_WEIGHT;
+        gridBagConstraints.weighty = SMALL_ROW_WEIGHT;
         frame.add(dateButtons, gridBagConstraints);
-
+        //layout constraints for viewButtons
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.weightx = COLUMN_WEIGHT;
-        gridBagConstraints.weighty = ROW_1_WEIGHT;
         frame.add(viewButtons, gridBagConstraints);
-
+        //layout constraints for scheduleButtons
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.weightx = COLUMN_WEIGHT;
-        gridBagConstraints.weighty = ROW_2_WEIGHT;
         gridBagConstraints.fill = GridBagConstraints.VERTICAL;
         frame.add(scheduleButtons, gridBagConstraints);
-
+        //layout constraints for text area
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
         gridBagConstraints.gridheight = 2;
-        gridBagConstraints.weightx = COLUMN_WEIGHT;
-        gridBagConstraints.weighty = 0.1;
         gridBagConstraints.fill = GridBagConstraints.BOTH;
         gridBagConstraints.insets = new Insets(0, 25, 0, 25);
         frame.add(scrollPane, gridBagConstraints);
@@ -96,15 +85,14 @@ public class CalendarView {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridheight = 1;
-        gridBagConstraints.weightx = COLUMN_WEIGHT;
-        gridBagConstraints.weighty = ROW_3_WEIGHT;
+        gridBagConstraints.weighty = LARGE_ROW_WEIGHT;
         gridBagConstraints.insets = new Insets(25, 25, 25, 25);
         frame.add(currentCalendar, gridBagConstraints);
 
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.weightx = COLUMN_WEIGHT;
-        gridBagConstraints.weighty = ROW_4_WEIGHT;
+        gridBagConstraints.weighty = SMALL_ROW_WEIGHT;
+        gridBagConstraints.insets = new Insets(0, 0, 0, 0);
         frame.add(formatterPanel, gridBagConstraints);
     }
 
