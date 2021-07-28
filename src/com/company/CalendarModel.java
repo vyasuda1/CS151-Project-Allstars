@@ -97,7 +97,7 @@ public class CalendarModel {
             viewType = previousViewType;
             final JPanel panel = new JPanel();
             JOptionPane.showMessageDialog(panel, "Invalid inputs or formats for one or both dates.\n Required" +
-                    " format: MM/DD/YYYY.\n Example: type 01/01/2021 for January 1st, 2021", "Error",
+                    " format: MM/DD/YYYY.\n Example: type 01/02/2021 for January 2nd, 2021", "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
     }
