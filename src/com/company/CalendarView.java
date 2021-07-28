@@ -7,6 +7,8 @@ package com.company;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Represents the GUI part of a calendar program.
@@ -46,10 +48,22 @@ public class CalendarView {
         CurrentCalendarComponent currentCalendarComponent = new CurrentCalendarComponent(model);
         JPanel currentCalendar = currentCalendarComponent.getPanel();
 
-        JButton dateFirstFormatterButton = new JButton("Date First");
+        JButton nameFirstFormatterButton = new JButton("Name First");
+        nameFirstFormatterButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.setFormatter(new NameFirstFormatter());
+            }
+        });
         JButton timeFirstFormatterButton = new JButton("Time First");
+        timeFirstFormatterButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.setFormatter(new TimeFirstFormatter());
+            }
+        });
         JPanel formatterPanel = new JPanel();
-        formatterPanel.add(dateFirstFormatterButton);
+        formatterPanel.add(nameFirstFormatterButton);
         formatterPanel.add(timeFirstFormatterButton);
 
         //code for the frame
