@@ -65,13 +65,11 @@ public class ViewChangerButtons {
             if (result == JOptionPane.OK_OPTION) {
                 startDate = startDateField.getText();
                 endDate = endDateField.getText();
-                if (startDate.length() == 10 && endDate.length() == 10) {
-                    model.setViewType(startDate, endDate);
-                    dayButton.setBackground(null);
-                    weekButton.setBackground(null);
-                    monthButton.setBackground(null);
-                    agendaButton.setBackground(Color.YELLOW);
-                }
+                model.setViewType(startDate, endDate);
+                dayButton.setBackground(null);
+                weekButton.setBackground(null);
+                monthButton.setBackground(null);
+                agendaButton.setBackground(Color.YELLOW);
             }
         });
 

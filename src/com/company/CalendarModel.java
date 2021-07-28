@@ -4,10 +4,12 @@ package com.company;
  * @author Haider Almandeel, Nolen Johnson, Viola Yasuda
  * @version 1.2 7/23/2021
  */
+import javax.swing.*;
 import java.io.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -23,7 +25,6 @@ public class CalendarModel {
     private String eventsToView; // will be used to set the text area in calendarView
     private LocalDate agendaStartDate; // will be used for agenda view
     private LocalDate agendaEndDate; // will be used for agenda view
-
     private EventFormatter formatter; //for the strategy patter requirement. Formats the events in the text area
 
     public static final DateTimeFormatter FILE_FORMATTER = DateTimeFormatter.ofPattern("M/d/yy"); //for saveToFile
@@ -36,16 +37,10 @@ public class CalendarModel {
     public CalendarModel() {
         viewType = "Day";
         dateToView = LocalDate.now();
-
-        // initializing events ArrayList
-        events = new ArrayList<>();
-        loadFile("events.txt");
-
-        //initializing formatter
-        formatter = new NameFirstFormatter();
-
-        //initializing contents of text area
-        eventsToView = dayViewAsString(dateToView);
+        events = new ArrayList<>(); // initializing events ArrayList
+        loadFile("events.txt"); //populating events ArrayList
+        formatter = new NameFirstFormatter(); //initializing formatter
+        eventsToView = dayViewAsString(dateToView); //initializing contents of text area
     }
 
     /**
@@ -91,10 +86,20 @@ public class CalendarModel {
      * @author Haider Almandeel, Nolen Johnson, Viola Yasuda
      */
     public void setViewType(String startDate, String endDate) {
+        String previousViewType = viewType;
+        try {
         viewType = "Agenda";
         agendaStartDate = LocalDate.parse(startDate, USER_FORMATTER);
         agendaEndDate = LocalDate.parse(endDate, USER_FORMATTER);
         setEventsToView();
+        }
+        catch (DateTimeParseException dateTimeParseException) {
+            viewType = previousViewType;
+            final JPanel panel = new JPanel();
+            JOptionPane.showMessageDialog(panel, "Invalid inputs or formats for one or both dates.\n Required" +
+                    " format: MM/DD/YYYY.\n Example: type 01/01/2021 for January 1st, 2021", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -107,7 +112,7 @@ public class CalendarModel {
     }
 
     /**
-     * Used when clicking Today button or dates in current calendar.
+     * Sets date to view to a specified date. Used when clicking Today button or dates in current calendar.
      * @param dateParam the date to view
      * @author Viola Yasuda
      */
@@ -226,11 +231,11 @@ public class CalendarModel {
                 in.nextLine();
             }
             Collections.sort(events);
-            System.out.println("Loading is done!");
         }
         catch (FileNotFoundException e) {
-            e.printStackTrace();
-            System.out.println("Loading failed.");
+            final JPanel panel = new JPanel();
+            JOptionPane.showMessageDialog(panel, "No file by that name was found. Loading of events " +
+                    "has failed.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
