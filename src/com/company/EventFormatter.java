@@ -1,19 +1,17 @@
 package com.company;
 
 /**
- * File javadoc (description here)
- * @author
- * @version
+ * This file contains a class EventFormatter that formats the event starting
+ * with either the name first or the time first.
+ * @author Haider Almandeel
+ * @version 1.0 7/27/2021
  */
 
-/**
- * Class javadoc (description here)
- */
 public interface EventFormatter {
     /**
-     * description here
-     * @param event
-     * @return
+     * Calls the unambiguous formatEvent method and returns a string.
+     * @author Haider Almandeel
+     * @version 1.0 7/27/2021
      */
     public String formatEvent(Event event);
 }
