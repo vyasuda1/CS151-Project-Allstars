@@ -1,6 +1,6 @@
 package com.company;
 /**
- * File description here
+ * This file has the class SchedulingButtons which holds the create and fromfile button in our application
  * @author Nolen Johnson
  * @version 1.0 7/20/2021
  */
@@ -10,14 +10,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Class description here
+ * Represent the create and fromfile buttons in our calendar
  */
 public class SchedulingButtons {
     private final JPanel panel;
     private final CalendarModel model;
 
     /**
-     * Constructor description here
+     * Constructs Schedulingbuttons object. Fills the panel with both buttons and adds action listeners to them 
      * @param modelParam param description here
      */
     SchedulingButtons(CalendarModel modelParam){
@@ -70,7 +70,7 @@ public class SchedulingButtons {
     }
 
     /**
-     * Method description here
+     * Gets the modified panel. Used in CalendarView
      * @return return description here
      */
     public JPanel getPanel(){
