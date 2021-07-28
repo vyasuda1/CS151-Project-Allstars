@@ -65,6 +65,7 @@ public class SchedulingButtons {
             if (result == JOptionPane.OK_OPTION) {
                 filename = fileNameField.getText();
                 model.loadFile(filename);
+                model.setEventsToView();
             }
         });
     }

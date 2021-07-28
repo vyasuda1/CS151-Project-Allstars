@@ -95,7 +95,7 @@ public class CalendarModel {
         }
         catch (DateTimeParseException dateTimeParseException) {
             viewType = previousViewType;
-            final JPanel panel = new JPanel();
+            JPanel panel = new JPanel();
             JOptionPane.showMessageDialog(panel, "Invalid inputs or formats for one or both dates.\n Required" +
                     " format: MM/DD/YYYY.\n Example: type 01/02/2021 for January 2nd, 2021", "Error",
                     JOptionPane.ERROR_MESSAGE);
@@ -131,7 +131,11 @@ public class CalendarModel {
             case "Day" -> dateToView = dateToView.plusDays(1);
             case "Week" -> dateToView = dateToView.plusWeeks(1);
             case "Month" -> dateToView = dateToView.plusMonths(1);
-            default -> System.out.println("Invalid view type for moving to next date.");
+            default ->  {
+                JPanel panel = new JPanel();
+                JOptionPane.showMessageDialog(panel, "Invalid view type for moving date.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
         setEventsToView();
     }
@@ -146,7 +150,11 @@ public class CalendarModel {
             case "Day" -> dateToView = dateToView.minusDays(1);
             case "Week" -> dateToView = dateToView.minusWeeks(1);
             case "Month" -> dateToView = dateToView.minusMonths(1);
-            default -> System.out.println("Invalid view type for moving to next date.");
+            default ->  {
+                JPanel panel = new JPanel();
+                JOptionPane.showMessageDialog(panel, "Invalid view type for moving date.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
         setEventsToView();
     }
@@ -181,7 +189,13 @@ public class CalendarModel {
             case "Month" -> {
                 eventsToView = "";
                 LocalDate temp = LocalDate.of(dateToView.getYear(), dateToView.getMonthValue(), 1);
-                while (temp.isBefore(LocalDate.of(dateToView.getYear(), dateToView.getMonthValue() + 1, 1))) {
+                int endMonthValue = dateToView.getMonthValue() + 1;
+                int endYearValue = dateToView.getYear();
+                if (endMonthValue > 12) {
+                    endMonthValue = 1;
+                    endYearValue++;
+                }
+                while (temp.isBefore(LocalDate.of(endYearValue, endMonthValue, 1))) {
                     eventsToView += dayViewAsString(temp);
                     temp = temp.plusDays(1);
                 }
