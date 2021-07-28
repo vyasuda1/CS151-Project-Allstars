@@ -6,6 +6,9 @@ package com.company;
  * @version 1.0 7/27/2021
  */
 
+/**
+ * Represents an event formatter that formats events as "startTime - endTime: Name of Event"
+ */
 public class TimeFirstFormatter implements EventFormatter{
     /**
      * Returns a string swapping the time and event with the time being shown first.
