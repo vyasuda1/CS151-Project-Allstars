@@ -5,8 +5,7 @@ package com.company;
  * @version 1.0 7/20/2021
  */
 import javax.swing.*;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.time.format.DateTimeParseException;
 
 /**
  * Represent the create and From File buttons in our calendar
@@ -17,13 +16,11 @@ public class SchedulingButtons {
 
     /**
      * Constructs SchedulingButtons object. Fills the panel with both buttons and adds action listeners to them.
-     * @param modelParam param description here
+     * @param modelParam Calendar model is passed
      */
     SchedulingButtons(CalendarModel modelParam){
         model = modelParam;
         panel = new JPanel();
-        AtomicInteger option = new AtomicInteger();
-        AtomicBoolean doesConflict = new AtomicBoolean(false);
         JButton createButton = new JButton("  Create   ");
         JButton fromFileButton = new JButton("From File");
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -31,26 +28,37 @@ public class SchedulingButtons {
         panel.add(fromFileButton);
         createButton.addActionListener(e -> {
             Event newEvent;
-            do {
-                String name = JOptionPane.showInputDialog("Name: ");
-                String date = JOptionPane.showInputDialog("Date: MM/DD/YYYY");
-                String startT = JOptionPane.showInputDialog("Starting Time: HH") + ":00";
-                String endT = JOptionPane.showInputDialog("Ending Time: HH") + ":00";
-                newEvent = new Event(name, date, startT, endT);
-                for (Event event : model.getEvents()){
-                    if (event.conflicts(newEvent)){
-                        doesConflict.set(true);
-                        option.set(JOptionPane.showConfirmDialog(null, "Would you like try to " +
-                                "create another event", "New Event ?", JOptionPane.YES_NO_OPTION));
-                    }
+            JTextField nameField = new JTextField(10);
+            JTextField dateField = new JTextField(10);
+            JTextField startTField = new JTextField(10);
+            JTextField endTField = new JTextField(10);
+            JPanel popupPanel = new JPanel();
+            popupPanel.setLayout(new BoxLayout(popupPanel, BoxLayout.Y_AXIS));
+            popupPanel.add(new JLabel("Please enter fields for your event: "));
+            popupPanel.add(Box.createVerticalStrut(10));
+            popupPanel.add(new JLabel("Name: "));
+            popupPanel.add(nameField);
+            popupPanel.add(new JLabel("Date: (MM/DD/YY)"));
+            popupPanel.add(dateField);
+            popupPanel.add(new JLabel("Start Time: (HH:MM)"));
+            popupPanel.add(startTField);
+            popupPanel.add(new JLabel("End Time: (HH:MM)"));
+            popupPanel.add(endTField);
+            int result = JOptionPane.showConfirmDialog(null,popupPanel,"New Event",JOptionPane.CLOSED_OPTION);
+            try {
+                newEvent = new Event(nameField.getText(), dateField.getText(), startTField.getText(), endTField.getText());
+                if (result == JOptionPane.OK_OPTION) {
+                    model.addEvent(newEvent);
+                    model.setEventsToView();
                 }
-            } while(option.get() == 1);
-            if (!doesConflict.get()) {
-                model.addEvent(newEvent);
-                model.setEventsToView();
+            }catch (DateTimeParseException dateTimeParseException){
+                final JPanel panel = new JPanel();
+                JOptionPane.showMessageDialog(panel, "Error with input, Please follow the format shown", "Error (Event not Added)", JOptionPane.ERROR_MESSAGE);
+
             }
         });
         fromFileButton.addActionListener(e-> {
+
             JTextField fileNameField = new JTextField(10);
             JPanel popupPanel = new JPanel();
             popupPanel.setLayout(new BoxLayout(popupPanel, BoxLayout.Y_AXIS));
@@ -71,7 +79,7 @@ public class SchedulingButtons {
 
     /**
      * Gets the modified panel. Used in CalendarView
-     * @return return description here
+     * @return returns panel
      */
     public JPanel getPanel(){
         return panel;
