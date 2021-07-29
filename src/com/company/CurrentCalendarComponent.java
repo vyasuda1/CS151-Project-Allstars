@@ -19,8 +19,8 @@ public class CurrentCalendarComponent {
     private final JPanel panel;
     private final CalendarModel model;
     public static final String[] DAYS_OF_WEEK = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
-    public static final int CALENDAR_ROWS = 7;
-    public static final int CALENDAR_COLUMNS = 6;
+    public static final int CALENDAR_ROWS = 6;
+    public static final int CALENDAR_COLUMNS = 7;
 
     /**
      * Constructs a CurrentCalendarComponent object.
@@ -44,7 +44,7 @@ public class CurrentCalendarComponent {
 
         //initialize calendarPanel
         JPanel calendarPanel = new JPanel();
-        calendarPanel.setLayout(new GridLayout(CALENDAR_ROWS, CALENDAR_COLUMNS + DAYS_OF_WEEK.length));
+        calendarPanel.setLayout(new GridLayout(CALENDAR_ROWS + 1, CALENDAR_COLUMNS)); //+1 for the day labels
         updateCalendarPanel(calendarPanel);
         backButton.addActionListener(e -> {
             selectedDate = selectedDate.minusMonths(1);

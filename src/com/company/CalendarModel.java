@@ -27,7 +27,6 @@ public class CalendarModel {
     private LocalDate agendaEndDate; // will be used for agenda view
     private EventFormatter formatter; //for the strategy patter requirement. Formats the events in the text area
 
-    public static final DateTimeFormatter FILE_FORMATTER = DateTimeFormatter.ofPattern("M/d/yy"); //for saveToFile
     public static final DateTimeFormatter USER_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy"); //for dates from user
 
     /**
@@ -60,8 +59,9 @@ public class CalendarModel {
     public void addEvent(Event newEvent) {
         for (Event e : events) {
             if (e.conflicts(newEvent)) {
-                System.out.println("Error: cannot add " + newEvent.getName() +
-                        " due to a time conflict with " + e.getName() + ".");
+                JPanel panel = new JPanel();
+                JOptionPane.showMessageDialog(panel, "Error: cannot add " + newEvent.getName() + " due to a " +
+                        "time conflict with " + e.getName() + ".", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
@@ -70,8 +70,9 @@ public class CalendarModel {
     }
 
     /**
-     * Sets the view type. Should only take "Day", "Week", and "Month" for the parameter.
+     * Sets the view type.
      * @param viewType the time span type to view
+     * precondition: Should only take "Day", "Week", and "Month" for the parameter.
      * @author Viola Yasuda
      */
     public void setViewType(String viewType) {
@@ -133,7 +134,7 @@ public class CalendarModel {
             case "Month" -> dateToView = dateToView.plusMonths(1);
             default ->  {
                 JPanel panel = new JPanel();
-                JOptionPane.showMessageDialog(panel, "Invalid view type for moving date.", "Error",
+                JOptionPane.showMessageDialog(panel, "Invalid view type for moving date forward.", "Error",
                         JOptionPane.ERROR_MESSAGE);
             }
         }
@@ -152,7 +153,7 @@ public class CalendarModel {
             case "Month" -> dateToView = dateToView.minusMonths(1);
             default ->  {
                 JPanel panel = new JPanel();
-                JOptionPane.showMessageDialog(panel, "Invalid view type for moving date.", "Error",
+                JOptionPane.showMessageDialog(panel, "Invalid view type for moving date back.", "Error",
                         JOptionPane.ERROR_MESSAGE);
             }
         }
@@ -170,6 +171,7 @@ public class CalendarModel {
 
     /**
      * Updates the string (eventsToView) that will be used to set the text area in CalendarView.
+     * precondition: agendaStartDate occurs before agendaEndDate
      * @author Viola Yasuda
      */
     public void setEventsToView() {
@@ -189,13 +191,7 @@ public class CalendarModel {
             case "Month" -> {
                 eventsToView = "";
                 LocalDate temp = LocalDate.of(dateToView.getYear(), dateToView.getMonthValue(), 1);
-                int endMonthValue = dateToView.getMonthValue() + 1;
-                int endYearValue = dateToView.getYear();
-                if (endMonthValue > 12) {
-                    endMonthValue = 1;
-                    endYearValue++;
-                }
-                while (temp.isBefore(LocalDate.of(endYearValue, endMonthValue, 1))) {
+                while (temp.getMonth().equals(dateToView.getMonth())) {
                     eventsToView += dayViewAsString(temp);
                     temp = temp.plusDays(1);
                 }
@@ -208,10 +204,13 @@ public class CalendarModel {
                     temp = temp.plusDays(1);
                 }
             }
-            default -> System.out.println("Invalid view type for showing events.");
+            default -> {
+                JPanel panel = new JPanel();
+                JOptionPane.showMessageDialog(panel, "Invalid view type for showing events.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
         notifyCalendarView();
-        //System.out.println(calendarModel.getEventsToView()); //only for Tester classes
     }
 
     /**
@@ -250,34 +249,6 @@ public class CalendarModel {
             final JPanel panel = new JPanel();
             JOptionPane.showMessageDialog(panel, "No file by that name was found. Loading of events " +
                     "has failed.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    /**
-     * Saves current events in output.txt.
-     * @author Viola Yasuda
-     */
-    public void saveToFile() {
-        try {
-            File myFile = new File("output.txt");
-            FileWriter fWriter = new FileWriter(myFile);
-            PrintWriter outputFile = new PrintWriter(fWriter);
-            for (Event e : events) {
-                outputFile.println(e.getName());
-                if (e.isRecurring()) {
-                    outputFile.println(e.getRepeatedDays() + " " + e.getTimeInterval().getStartTime() + " " +
-                            e.getTimeInterval().getEndTime() + " " + e.getDates().first().format(FILE_FORMATTER) + " " +
-                            e.getDates().last().format(FILE_FORMATTER));
-                }
-                else {
-                    outputFile.println(e.getDates().first().format(FILE_FORMATTER) + " " +
-                            e.getTimeInterval().getStartTime() + " " + e.getTimeInterval().getEndTime());
-                }
-            }
-            outputFile.close();
-        }
-        catch (IOException exception) {
-            exception.printStackTrace();
         }
     }
 

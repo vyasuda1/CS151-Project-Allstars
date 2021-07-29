@@ -7,8 +7,6 @@ package com.company;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Represents the GUI part of a calendar program.
@@ -47,20 +45,21 @@ public class CalendarView {
         JPanel scheduleButtons = schedulingButtons.getPanel();
         CurrentCalendarComponent currentCalendarComponent = new CurrentCalendarComponent(model);
         JPanel currentCalendar = currentCalendarComponent.getPanel();
-
-        JButton nameFirstFormatterButton = new JButton("Name First");
-        nameFirstFormatterButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                model.setFormatter(new NameFirstFormatter());
-            }
+        //code for the event formatter buttons (the strategy pattern feature)
+        NameFirstFormatter nameFirstFormatter = new NameFirstFormatter();
+        TimeFirstFormatter timeFirstFormatter = new TimeFirstFormatter();
+        JButton nameFirstFormatterButton = new JButton("Name First Format");
+        JButton timeFirstFormatterButton = new JButton("Time First Format");
+        nameFirstFormatterButton.addActionListener(e -> {
+            model.setFormatter(nameFirstFormatter);
+            nameFirstFormatterButton.setBackground(Color.YELLOW);
+            timeFirstFormatterButton.setBackground(null);
         });
-        JButton timeFirstFormatterButton = new JButton("Time First");
-        timeFirstFormatterButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                model.setFormatter(new TimeFirstFormatter());
-            }
+
+        timeFirstFormatterButton.addActionListener(e -> {
+            model.setFormatter(timeFirstFormatter);
+            timeFirstFormatterButton.setBackground(Color.YELLOW);
+            nameFirstFormatterButton.setBackground(null);
         });
         JPanel formatterPanel = new JPanel();
         formatterPanel.add(nameFirstFormatterButton);

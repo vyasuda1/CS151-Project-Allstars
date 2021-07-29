@@ -1,23 +1,22 @@
 package com.company;
 /**
- * This file has the class SchedulingButtons which holds the create and fromfile button in our application
+ * This file has the class SchedulingButtons which holds the CREATE and From File button in our application
  * @author Nolen Johnson
  * @version 1.0 7/20/2021
  */
 import javax.swing.*;
-import java.awt.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Represent the create and fromfile buttons in our calendar
+ * Represent the create and From File buttons in our calendar
  */
 public class SchedulingButtons {
     private final JPanel panel;
     private final CalendarModel model;
 
     /**
-     * Constructs Schedulingbuttons object. Fills the panel with both buttons and adds action listeners to them 
+     * Constructs SchedulingButtons object. Fills the panel with both buttons and adds action listeners to them.
      * @param modelParam param description here
      */
     SchedulingButtons(CalendarModel modelParam){
@@ -25,8 +24,8 @@ public class SchedulingButtons {
         panel = new JPanel();
         AtomicInteger option = new AtomicInteger();
         AtomicBoolean doesConflict = new AtomicBoolean(false);
-        JButton createButton = new JButton(" Create  ");
-        JButton fromFileButton = new JButton("fromFile");
+        JButton createButton = new JButton("  Create   ");
+        JButton fromFileButton = new JButton("From File");
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(createButton);
         panel.add(fromFileButton);
@@ -59,10 +58,10 @@ public class SchedulingButtons {
             popupPanel.add(Box.createVerticalStrut(20));
             popupPanel.add(new JLabel("File Name (format it filename.txt):"));
             popupPanel.add(fileNameField);
-            int result = JOptionPane.showConfirmDialog(null, popupPanel,
-                    "Loading Events From File", JOptionPane.CLOSED_OPTION);
+            int userResponse = JOptionPane.showConfirmDialog(null, popupPanel,
+                    "Loading Events From File", JOptionPane.DEFAULT_OPTION);
             String filename;
-            if (result == JOptionPane.OK_OPTION) {
+            if (userResponse == JOptionPane.OK_OPTION) {
                 filename = fileNameField.getText();
                 model.loadFile(filename);
                 model.setEventsToView();

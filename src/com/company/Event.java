@@ -2,7 +2,7 @@ package com.company;
 /**
  * Contains a class that represents an event.
  * @author Viola Yasuda
- * @version 1.1 7/24/2021
+ * @version 1.2 7/28/2021
  */
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -76,14 +76,6 @@ public class Event implements Comparable {
     }
 
     /**
-     * Returns boolean indicating if this event is recurring or not.
-     * @return true if event occurs on more than one date, false otherwise
-     */
-    public boolean isRecurring() {
-        return dates.size() > 1;
-    }
-
-    /**
      * Gets the name of the event.
      * @return the name of the event
      */
@@ -92,7 +84,7 @@ public class Event implements Comparable {
     }
 
     /**
-     * Gets the dates of the event
+     * Gets the dates of the event.
      * @return dates
      */
     public TreeSet<LocalDate> getDates() {
@@ -106,32 +98,6 @@ public class Event implements Comparable {
     public TimeInterval getTimeInterval() {
         return timeInterval;
     }
-
-    /**
-     * Gets the repeated days of the event.
-     * @return repeatedDays
-     */
-    public String getRepeatedDays() {
-        return repeatedDays;
-    }
-
-    /**
-     * Puts information about the event into a string.
-     * @return a string with the event's information
-     */
-    /*
-    @Override
-    public String toString() {
-        //return eventAsStr;
-        String str = name + " at " + timeInterval.toString() + " on ";
-        if (dates.size() == 1)
-            str += dates.first().getDayOfWeek() + " " + dates.first().format(FILE_FORMATTER);
-        else
-            str += repeatedDays + " from " + dates.first().format(FILE_FORMATTER) +" to " +
-                    dates.last().format(FILE_FORMATTER);
-        return str;
-    }
-     */
 
     /**
      * Compares this event to another event
