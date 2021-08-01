@@ -27,7 +27,7 @@ public class CalendarModel {
     private LocalDate agendaEndDate; // will be used for agenda view
     private EventFormatter formatter; //for the strategy patter requirement. Formats the events in the text area
 
-    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
     /**
      * Constructs a MyCalendar object from the contents of events.txt.
@@ -90,8 +90,8 @@ public class CalendarModel {
         String previousViewType = viewType;
         try {
         viewType = "Agenda";
-        agendaStartDate = LocalDate.parse(startDate, FORMATTER);
-        agendaEndDate = LocalDate.parse(endDate, FORMATTER);
+        agendaStartDate = LocalDate.parse(startDate, DATE_FORMATTER);
+        agendaEndDate = LocalDate.parse(endDate, DATE_FORMATTER);
         setEventsToView();
         }
         catch (DateTimeParseException dateTimeParseException) {
@@ -291,7 +291,7 @@ public class CalendarModel {
                 date.getYear() + "\n";
         for (Event e : events) {
             if (e.getDates().contains(date)) {
-                dayEvents.add(new Event(e.getName(), date.format(FORMATTER),
+                dayEvents.add(new Event(e.getName(), date.format(DATE_FORMATTER),
                         e.getTimeInterval().getStartTime().toString(), e.getTimeInterval().getEndTime().toString()));
             }
         }
