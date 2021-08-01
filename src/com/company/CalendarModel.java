@@ -27,7 +27,7 @@ public class CalendarModel {
     private LocalDate agendaEndDate; // will be used for agenda view
     private EventFormatter formatter; //for the strategy patter requirement. Formats the events in the text area
 
-    public static final DateTimeFormatter USER_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy"); //for dates from user
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
     /**
      * Constructs a MyCalendar object from the contents of events.txt.
@@ -90,8 +90,8 @@ public class CalendarModel {
         String previousViewType = viewType;
         try {
         viewType = "Agenda";
-        agendaStartDate = LocalDate.parse(startDate, USER_FORMATTER);
-        agendaEndDate = LocalDate.parse(endDate, USER_FORMATTER);
+        agendaStartDate = LocalDate.parse(startDate, FORMATTER);
+        agendaEndDate = LocalDate.parse(endDate, FORMATTER);
         setEventsToView();
         }
         catch (DateTimeParseException dateTimeParseException) {
@@ -123,8 +123,8 @@ public class CalendarModel {
     }
 
     /**
-     * Sets dateToView to a date either one day, week, or month after the current dateToView depending on the current
-     * viewType.
+     * Sets dateToView to a date either one day, week, or month after the current dateToView depending on the
+     * current viewType.
      * @author Viola Yasuda
      */
     public void setNextDateToView() {
@@ -142,8 +142,8 @@ public class CalendarModel {
     }
 
     /**
-     * Sets dateToView to a date either one day, week, or month before the current dateToView depending on the current
-     * viewType.
+     * Sets dateToView to a date either one day, week, or month before the current dateToView depending on the
+     * current viewType.
      * @author Viola Yasuda
      */
     public void setPreviousDateToView() {
@@ -246,7 +246,7 @@ public class CalendarModel {
             Collections.sort(events);
         }
         catch (FileNotFoundException e) {
-            final JPanel panel = new JPanel();
+            JPanel panel = new JPanel();
             JOptionPane.showMessageDialog(panel, "No file by that name was found. Loading of events " +
                     "has failed.", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -291,7 +291,7 @@ public class CalendarModel {
                 date.getYear() + "\n";
         for (Event e : events) {
             if (e.getDates().contains(date)) {
-                dayEvents.add(new Event(e.getName(), date.format(USER_FORMATTER),
+                dayEvents.add(new Event(e.getName(), date.format(FORMATTER),
                         e.getTimeInterval().getStartTime().toString(), e.getTimeInterval().getEndTime().toString()));
             }
         }

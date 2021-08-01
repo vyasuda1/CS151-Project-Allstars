@@ -19,7 +19,8 @@ public class DateChangerButtons {
     private final JPanel panel;
 
     /**
-     * Constructs a DateChangerButtons object. Fills the panel with the buttons and assigns actionListeners to them.
+     * Constructs a DateChangerButtons object. Fills the panel with the buttons and assigns actionListeners to
+     * them.
      * @param modelParam the model to interact with
      */
     public DateChangerButtons(CalendarModel modelParam) {

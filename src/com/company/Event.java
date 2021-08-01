@@ -19,8 +19,8 @@ public class Event implements Comparable {
     private final TreeSet<LocalDate> dates;
     private final String repeatedDays;
 
-    public static final DateTimeFormatter FILE_FORMATTER = DateTimeFormatter.ofPattern("M/d/yy"); //for dates from file
-    public static final DateTimeFormatter USER_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy"); //for dates from user
+    public static final DateTimeFormatter FILE_FORMATTER = DateTimeFormatter.ofPattern("M/d/yy"); //for file dates
+    public static final DateTimeFormatter USER_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy"); //for user dates
     public static final String DAY_ABBREVIATIONS = "_MTWRFAS";
 
     /**

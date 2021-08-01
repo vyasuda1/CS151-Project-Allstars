@@ -28,10 +28,10 @@ public class SchedulingButtons {
         panel.add(fromFileButton);
         createButton.addActionListener(e -> {
             Event newEvent;
-            JTextField nameField = new JTextField(10);
-            JTextField dateField = new JTextField(10);
-            JTextField startTField = new JTextField(10);
-            JTextField endTField = new JTextField(10);
+            JTextField nameField = new JTextField();
+            JTextField dateField = new JTextField();
+            JTextField startTField = new JTextField();
+            JTextField endTField = new JTextField();
             JPanel popupPanel = new JPanel();
             popupPanel.setLayout(new BoxLayout(popupPanel, BoxLayout.Y_AXIS));
             popupPanel.add(new JLabel("Please enter fields for your event: "));
@@ -44,22 +44,40 @@ public class SchedulingButtons {
             popupPanel.add(startTField);
             popupPanel.add(new JLabel("End Time: (HH:MM)"));
             popupPanel.add(endTField);
-            int result = JOptionPane.showConfirmDialog(null,popupPanel,"New Event",JOptionPane.CLOSED_OPTION);
-            try {
-                newEvent = new Event(nameField.getText(), dateField.getText(), startTField.getText(), endTField.getText());
-                if (result == JOptionPane.OK_OPTION) {
-                    model.addEvent(newEvent);
-                    model.setEventsToView();
+            boolean newEventConflicts;
+            do {
+                newEventConflicts = false;
+                int result = JOptionPane.showConfirmDialog(null, popupPanel, "New Event",
+                        JOptionPane.CANCEL_OPTION);
+                try {
+                    if (result == JOptionPane.OK_OPTION) {
+                        newEvent = new Event(nameField.getText(), dateField.getText(), startTField.getText(),
+                                endTField.getText());
+                        for (Event event : model.getEvents()) {
+                            if (event.conflicts(newEvent)) {
+                                newEventConflicts = true;
+                                JOptionPane.showMessageDialog(panel, "Error: cannot add " + newEvent.getName() +
+                                        " due to a time conflict with " + event.getName() + ".\nEither enter a new " +
+                                        "date/time or click cancel on the next panel.",
+                                        "Error (Event not Added)", JOptionPane.ERROR_MESSAGE);
+                                break;
+                            }
+                        }
+                        if (!newEventConflicts) {
+                            model.addEvent(newEvent);
+                            model.setEventsToView();
+                        }
+                    }
                 }
-            }catch (DateTimeParseException dateTimeParseException){
-                final JPanel panel = new JPanel();
-                JOptionPane.showMessageDialog(panel, "Error with input, Please follow the format shown", "Error (Event not Added)", JOptionPane.ERROR_MESSAGE);
-
-            }
+                catch (DateTimeParseException dateTimeParseException) {
+                    JPanel panel = new JPanel();
+                    JOptionPane.showMessageDialog(panel, "Error: invalid input. Please follow specified " +
+                                    "format.", "Error (Event not Added)", JOptionPane.ERROR_MESSAGE);
+                }
+            } while (newEventConflicts);
         });
         fromFileButton.addActionListener(e-> {
-
-            JTextField fileNameField = new JTextField(10);
+            JTextField fileNameField = new JTextField();
             JPanel popupPanel = new JPanel();
             popupPanel.setLayout(new BoxLayout(popupPanel, BoxLayout.Y_AXIS));
             popupPanel.add(new JLabel("Please enter the name of the file to load recurring events from."));
