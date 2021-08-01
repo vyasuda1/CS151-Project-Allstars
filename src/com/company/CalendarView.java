@@ -55,7 +55,6 @@ public class CalendarView {
             nameFirstFormatterButton.setBackground(Color.YELLOW);
             timeFirstFormatterButton.setBackground(null);
         });
-
         timeFirstFormatterButton.addActionListener(e -> {
             model.setFormatter(timeFirstFormatter);
             timeFirstFormatterButton.setBackground(Color.YELLOW);

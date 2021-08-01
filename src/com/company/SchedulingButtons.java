@@ -47,10 +47,10 @@ public class SchedulingButtons {
             boolean newEventConflicts;
             do {
                 newEventConflicts = false;
-                int result = JOptionPane.showConfirmDialog(null, popupPanel, "New Event",
+                int userResponse = JOptionPane.showConfirmDialog(null, popupPanel, "New Event",
                         JOptionPane.CANCEL_OPTION);
                 try {
-                    if (result == JOptionPane.OK_OPTION) {
+                    if (userResponse == JOptionPane.OK_OPTION) {
                         newEvent = new Event(nameField.getText(), dateField.getText(), startTField.getText(),
                                 endTField.getText());
                         for (Event event : model.getEvents()) {

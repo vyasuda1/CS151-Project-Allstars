@@ -64,26 +64,6 @@ public class CurrentCalendarComponent {
     }
 
     /**
-     * Updates a panel to show the correct month display.
-     * @param calendarPanel the panel to update
-     */
-    private void updateCalendarPanel(JPanel calendarPanel) {
-        calendarPanel.removeAll();
-        for (String s : DAYS_OF_WEEK) {
-            calendarPanel.add(new JLabel(s, JLabel.CENTER));
-        }
-        LocalDate temp = LocalDate.of(selectedDate.getYear(), selectedDate.getMonthValue(), 1);
-        while (!temp.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
-            temp = temp.minusDays(1);
-        }
-        for (int i = 0; i < CALENDAR_ROWS * CALENDAR_COLUMNS; i++) {
-            CalendarNumberButton button = new CalendarNumberButton(temp, model);
-            calendarPanel.add(button);
-            temp = temp.plusDays(1);
-        }
-    }
-
-    /**
      * Gets the panel with the buttons. Used in CalendarView to add to the frame.
      * @return panel
      */
@@ -136,6 +116,26 @@ public class CurrentCalendarComponent {
                     setBackground(null);
                 }
             });
+        }
+    }
+
+    /**
+     * Updates a panel to show the correct month display.
+     * @param calendarPanel the panel to update
+     */
+    private void updateCalendarPanel(JPanel calendarPanel) {
+        calendarPanel.removeAll();
+        for (String s : DAYS_OF_WEEK) {
+            calendarPanel.add(new JLabel(s, JLabel.CENTER));
+        }
+        LocalDate temp = LocalDate.of(selectedDate.getYear(), selectedDate.getMonthValue(), 1);
+        while (!temp.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+            temp = temp.minusDays(1);
+        }
+        for (int i = 0; i < CALENDAR_ROWS * CALENDAR_COLUMNS; i++) {
+            CalendarNumberButton button = new CalendarNumberButton(temp, model);
+            calendarPanel.add(button);
+            temp = temp.plusDays(1);
         }
     }
 }
